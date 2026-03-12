@@ -21,4 +21,5 @@ public class BlogRequest {
     private String image;
 
     private Long categoryId;
+
 }

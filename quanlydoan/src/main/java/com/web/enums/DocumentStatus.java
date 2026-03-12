@@ -1,10 +1,12 @@
 package com.web.enums;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum DocumentStatus {
 
     DANG_HIEN_THI("Đang hiển thị", "#007BFF"),

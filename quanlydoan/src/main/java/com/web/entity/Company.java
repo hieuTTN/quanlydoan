@@ -23,7 +23,14 @@ public class Company {
 
     private String phone;
 
+    private String email;
+
+    private String website;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     private String taxCode;
+
+    private Boolean active = true;
 }

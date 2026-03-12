@@ -2,7 +2,7 @@ var exceptionCode = 417;
 var token = localStorage.getItem("token");
 $( document ).ready(function() {
     var menu = 
-    `<div class="sidebar-title p-4 text-white fw-bold fs-4">ĐOÀN TNCS HCM</div>
+    `<div class="sidebar-title p-4 text-white fw-bold fs-4 text-center">ADMIN</div>
     <div class="menu" id="main-menu">
         <a href="index.html" class="menu-item"><i class="bi bi-speedometer2"></i> <span class="nav-text">Dashboard</span></a>
 
@@ -20,8 +20,8 @@ $( document ).ready(function() {
             <i class="bi bi-chevron-down ms-auto nav-text"></i>
         </a>
         <div class="collapse" id="menu2">
-            <a href="tochuc.html" class="menu-item ps-5"><i class="bi bi-building"></i> <span class="nav-text">Danh sách</span></a>
-            <a href="add-tochuc.html" class="menu-item ps-5"><i class="bi bi-plus-circle"></i> <span class="nav-text">Thêm mới</span></a>
+            <a href="category.html" class="menu-item ps-5"><i class="bi bi-building"></i> <span class="nav-text">Danh sách</span></a>
+            <a href="add-category.html" class="menu-item ps-5"><i class="bi bi-plus-circle"></i> <span class="nav-text">Thêm mới</span></a>
         </div>
 
         <a href="#" class="menu-item" data-bs-toggle="collapse" data-bs-target="#menu3">
@@ -29,8 +29,8 @@ $( document ).ready(function() {
             <i class="bi bi-chevron-down ms-auto nav-text"></i>
         </a>
         <div class="collapse" id="menu3">
-            <a href="sukien.html" class="menu-item ps-5"><i class="bi bi-building"></i> <span class="nav-text">Danh sách</span></a>
-            <a href="add-sukien.html" class="menu-item ps-5"><i class="bi bi-plus-circle"></i> <span class="nav-text">Thêm mới</span></a>
+            <a href="blog.html" class="menu-item ps-5"><i class="bi bi-building"></i> <span class="nav-text">Danh sách</span></a>
+            <a href="add-blog.html" class="menu-item ps-5"><i class="bi bi-plus-circle"></i> <span class="nav-text">Thêm mới</span></a>
         </div>
 
         <a href="#" class="menu-item" data-bs-toggle="collapse" data-bs-target="#menu6">
@@ -38,8 +38,8 @@ $( document ).ready(function() {
             <i class="bi bi-chevron-down ms-auto nav-text"></i>
         </a>
         <div class="collapse" id="menu6">
-            <a href="sukien.html" class="menu-item ps-5"><i class="bi bi-building"></i> <span class="nav-text">Danh sách</span></a>
-            <a href="add-sukien.html" class="menu-item ps-5"><i class="bi bi-plus-circle"></i> <span class="nav-text">Thêm mới</span></a>
+            <a href="company.html" class="menu-item ps-5"><i class="bi bi-building"></i> <span class="nav-text">Danh sách</span></a>
+            <a href="add-company.html" class="menu-item ps-5"><i class="bi bi-plus-circle"></i> <span class="nav-text">Thêm mới</span></a>
         </div>
 
         <a href="#" class="menu-item" data-bs-toggle="collapse" data-bs-target="#menu7">
@@ -47,8 +47,8 @@ $( document ).ready(function() {
             <i class="bi bi-chevron-down ms-auto nav-text"></i>
         </a>
         <div class="collapse" id="menu7">
-            <a href="sukien.html" class="menu-item ps-5"><i class="bi bi-building"></i> <span class="nav-text">Danh sách</span></a>
-            <a href="add-sukien.html" class="menu-item ps-5"><i class="bi bi-plus-circle"></i> <span class="nav-text">Thêm mới</span></a>
+            <a href="document.html" class="menu-item ps-5"><i class="bi bi-building"></i> <span class="nav-text">Danh sách</span></a>
+            <a href="add-document.html" class="menu-item ps-5"><i class="bi bi-plus-circle"></i> <span class="nav-text">Thêm mới</span></a>
         </div>
 
         <a href="#" class="menu-item" data-bs-toggle="collapse" data-bs-target="#menu8">
@@ -56,8 +56,8 @@ $( document ).ready(function() {
             <i class="bi bi-chevron-down ms-auto nav-text"></i>
         </a>
         <div class="collapse" id="menu8">
-            <a href="sukien.html" class="menu-item ps-5"><i class="bi bi-building"></i> <span class="nav-text">Danh sách</span></a>
-            <a href="add-sukien.html" class="menu-item ps-5"><i class="bi bi-plus-circle"></i> <span class="nav-text">Thêm mới</span></a>
+            <a href="semester.html" class="menu-item ps-5"><i class="bi bi-building"></i> <span class="nav-text">Danh sách</span></a>
+            <a href="add-semester.html" class="menu-item ps-5"><i class="bi bi-plus-circle"></i> <span class="nav-text">Thêm mới</span></a>
         </div>
 
         <a href="#" class="menu-item" data-bs-toggle="collapse" data-bs-target="#menu9">

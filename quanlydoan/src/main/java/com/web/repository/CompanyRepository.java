@@ -14,6 +14,6 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
 
     boolean existsByName(String name);
 
-    @Query("select c from Company c where c.name like ?1 or c.taxCode like ?1")
+    @Query("select c from Company c where c.name like ?1 or c.taxCode like ?1 or c.email like ?1 or c.address like ?1")
     Page<Company> findByParam(String search, Pageable pageable);
 }

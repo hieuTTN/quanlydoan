@@ -17,7 +17,10 @@ public class SemesterService {
     private SemesterRepository repo;
 
     public Semester save(Semester semester) {
-        if (repo.existsByYearName(semester.getYearName())) {
+        if (semester.getId() == null && repo.existsByYearName(semester.getYearName())) {
+            throw new MessageException("Năm học này đã tồn tại");
+        }
+        if (semester.getId() != null && repo.existsByYearName(semester.getYearName(), semester.getId())) {
             throw new MessageException("Năm học này đã tồn tại");
         }
 
