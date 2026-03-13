@@ -16,10 +16,6 @@ public class SemesterType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String projectName;
-
-    private String descriptionProject;
-
     @Enumerated(EnumType.STRING)
     private InternshipType type;
 

@@ -2,12 +2,16 @@ package com.web.api;
 
 import com.web.dto.request.SemesterTypeRequest;
 import com.web.entity.SemesterType;
+import com.web.enums.DocumentStatus;
+import com.web.enums.InternshipType;
 import com.web.service.SemesterTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -25,9 +29,8 @@ public class SemesterTypeApi {
 
 
     @GetMapping("/public/find-all")
-    public Page<SemesterType> findAll(Pageable pageable, @RequestParam(required = false) String search
-            , @RequestParam(required = false) Long semesterId){
-        return semesterTypeService.findAll(search,semesterId, pageable);
+    public List<SemesterType> findAll(@RequestParam Long semesterId){
+        return semesterTypeService.findAll(semesterId);
     }
 
 
@@ -42,4 +45,8 @@ public class SemesterTypeApi {
         return semesterTypeService.delete(id);
     }
 
+    @GetMapping("/admin/type")
+    public List<InternshipType> getAllStatus(){
+        return Arrays.asList(InternshipType.values());
+    }
 }

@@ -19,20 +19,6 @@ async function loadNamHoc() {
     });
 }
 
-async function loadTeacher() {
-    var response = await getMethod(`/api/user/admin/get-all-teacher`)
-    var list = await response.json();
-    var main = '';
-    for (i = 0; i < list.length; i++) {
-        main += `<option value="${list[i].id}">userId:${list[i].id} - ${list[i].fullname} - ${list[i].email}</option>`
-    }
-    document.getElementById("teachers").innerHTML = main
-    $('#teachers').select2({
-        theme: "bootstrap-5",
-        width: '100%', 
-        templateSelection: (data) => data.text 
-    });
-}
 
 async function loadCompanys() {
     var response = await getMethod(`/api/company/public/find-all-list`)
@@ -52,13 +38,13 @@ async function loadCompanys() {
 
 var size = 10;
 async function loadCongTyNamHoc(page) {
-    var url = `/api/semester-company/public/find-all?size=${size}&page=${page}&semesterId=${namhoc}`
     var namhoc = document.getElementById("semester").value
+    var url = `/api/semester-company/public/find-all?size=${size}&page=${page}&semesterId=${namhoc}`
     var search = document.getElementById("search").value
     if(search != null && search != ''){
         url += `&search=${search}`
     }
-    var response = await getMethod(`/api/semester-company/public/find-all?semesterId=${namhoc}`)
+    var response = await getMethod(url)
     if(response == null){
         document.getElementById("list-data").innerHTML = '<tr><td colspan="6" class="text-center">Lỗi khi tải dữ liệu</td></tr>';
     }

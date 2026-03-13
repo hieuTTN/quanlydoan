@@ -19,6 +19,10 @@ public class SemesterTeacher {
 
     private Integer currentStudents = 0;
 
+    private String projectName;
+
+    private String descriptionProject;
+
     @ManyToOne
     private User teacher;
 

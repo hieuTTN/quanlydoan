@@ -13,10 +13,6 @@ public class SemesterTypeRequest {
 
     private Long id;
 
-    private String projectName;
-
-    private String descriptionProject;
-
     private InternshipType type;
 
     private Long semesterId;
@@ -25,13 +21,17 @@ public class SemesterTypeRequest {
 
     @Getter
     @Setter
-    public class SemesterTeacherRequest {
+    public static class SemesterTeacherRequest {
 
         private Long id;
 
         private Integer maxStudents;
 
         private Long teacherId;
+
+        private String projectName;
+
+        private String descriptionProject;
 
     }
 

@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -50,8 +51,6 @@ public class SemesterTypeService {
                     .orElseThrow(() -> new MessageException("Không tìm thấy loại đề tài"));
         }
 
-        semesterType.setProjectName(request.getProjectName());
-        semesterType.setDescriptionProject(request.getDescriptionProject());
         semesterType.setType(request.getType());
         semesterType.setSemester(semester);
 
@@ -81,7 +80,8 @@ public class SemesterTypeService {
 
             semesterTeacher.setMaxStudents(t.getMaxStudents());
             semesterTeacher.setTeacher(teacher);
-
+            semesterTeacher.setProjectName(t.getProjectName());
+            semesterTeacher.setDescriptionProject(t.getDescriptionProject());
             semesterTeacherRepository.save(semesterTeacher);
         }
 
@@ -106,26 +106,8 @@ public class SemesterTypeService {
     }
 
 
-    public Page<SemesterType> findAll(String search, Long semesterId, Pageable pageable){
-
-        if(search == null || search.trim().isEmpty()){
-            if(semesterId == null){
-                return semesterTypeRepository.findAll(pageable);
-            }
-            else{
-                return semesterTypeRepository.findBySemesterId(semesterId, pageable);
-            }
-        }
-        else{
-            search = "%" + search + "%";
-
-            if(semesterId == null){
-                return semesterTypeRepository.findByParam(search, pageable);
-            }
-            else{
-                return semesterTypeRepository.findByParamAndSemester(search, semesterId, pageable);
-            }
-        }
+    public List<SemesterType> findAll(Long semesterId){
+        return semesterTypeRepository.findByParamAndSemester(semesterId);
     }
 
 }

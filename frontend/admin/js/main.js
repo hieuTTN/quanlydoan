@@ -58,7 +58,6 @@ $( document ).ready(function() {
         <div class="collapse" id="menu8">
             <a href="semester.html" class="menu-item ps-5"><i class="bi bi-building"></i> <span class="nav-text">Danh sách</span></a>
             <a href="add-semester.html" class="menu-item ps-5"><i class="bi bi-plus-circle"></i> <span class="nav-text">Thêm mới</span></a>
-            <a href="teacher-semester.html" class="menu-item ps-5"><i class="bi bi-people"></i> <span class="nav-text">Giảng viên</span></a>
             <a href="company-semester.html" class="menu-item ps-5"><i class="bi bi-plus-circle"></i> <span class="nav-text">Công ty</span></a>
             <a href="semester-type.html" class="menu-item ps-5"><i class="bi bi-plus-circle"></i> <span class="nav-text">Loại thực tập</span></a>
         </div>
