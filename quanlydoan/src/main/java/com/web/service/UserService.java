@@ -320,7 +320,7 @@ public class UserService {
 
                     User user = new User();
 
-                    user.setUsername(username);
+                    user.setUsername(email);
                     user.setPassword(passwordEncoder.encode(password));
                     user.setFullname(fullname);
                     user.setEmail(email);
@@ -470,4 +470,7 @@ public class UserService {
         }
     }
 
+    public List<User> allTeacher() {
+        return userRepository.getUserByRole(Contains.ROLE_TEACHER);
+    }
 }

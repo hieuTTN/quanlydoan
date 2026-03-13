@@ -19,6 +19,9 @@ public class SemesterCompany {
 
     private Integer currentStudent = 0;
 
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
     @ManyToOne
     private Semester semester;
 

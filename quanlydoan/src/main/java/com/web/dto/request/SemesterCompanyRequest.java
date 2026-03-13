@@ -16,18 +16,21 @@ public class SemesterCompanyRequest {
 
     @Getter
     @Setter
-    public class SemesterCompanyInsert{
+    public static class SemesterCompanyInsert{
 
         private Integer maxStudent;
 
         private Long companyId;
+
+        private String description;
     }
 
     @Getter
     @Setter
-    public class SemesterCompanyUpdate{
+    public static class SemesterCompanyUpdate{
         private Long id;
         private Integer maxStudent;
+        private String description;
     }
 
 }

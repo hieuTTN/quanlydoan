@@ -209,3 +209,54 @@ async function deleteMethod(url) {
 }
 
 
+function pageable(page, totalPage, callback){
+    let mainpage = '';
+
+    let start = Math.max(0, page - 2);
+    let end = Math.min(totalPage - 1, page + 2);
+
+    // nút previous
+    if(page > 0){
+        mainpage += `<li class="page-item">
+            <a class="page-link" href="#" onclick="${callback}(${page-1})">«</a>
+        </li>`;
+    }
+
+    // nếu bị cắt đầu
+    if(start > 0){
+        mainpage += `<li class="page-item">
+            <a class="page-link" href="#" onclick="${callback}(0)">1</a>
+        </li>`;
+
+        if(start > 1){
+            mainpage += `<li class="page-item disabled"><a class="page-link">...</a></li>`;
+        }
+    }
+
+    // các trang chính
+    for(let i = start; i <= end; i++){
+        mainpage += `<li class="page-item ${page == i ? 'active' : ''}">
+            <a class="page-link" href="#" onclick="${callback}(${i})">${i+1}</a>
+        </li>`;
+    }
+
+    // nếu bị cắt cuối
+    if(end < totalPage - 1){
+        if(end < totalPage - 2){
+            mainpage += `<li class="page-item disabled"><a class="page-link">...</a></li>`;
+        }
+
+        mainpage += `<li class="page-item">
+            <a class="page-link" href="#" onclick="${callback}(${totalPage-1})">${totalPage}</a>
+        </li>`;
+    }
+
+    // nút next
+    if(page < totalPage - 1){
+        mainpage += `<li class="page-item">
+            <a class="page-link" href="#" onclick="${callback}(${page+1})">»</a>
+        </li>`;
+    }
+
+    document.getElementById("pagination").innerHTML = mainpage;
+}

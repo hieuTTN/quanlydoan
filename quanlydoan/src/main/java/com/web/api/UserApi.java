@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -112,6 +113,14 @@ public class UserApi {
         Page<User> result = userService.getUserByRole("%"+search+"%",role,pageable);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @GetMapping("/admin/get-all-teacher")
+    public ResponseEntity<?> allTeacher(){
+        List<User> result = userService.allTeacher();
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+
 
     @GetMapping("/admin/check-role-admin")
     public void checkRoleAdmin(){

@@ -31,6 +31,7 @@ async function loadUsers(page) {
     var main = '';
     for (i = 0; i < list.length; i++) {
         main += ` <tr id="user-row-${list[i].id}">
+                    <td>${page * size + Number(i) + Number(1)}</td>
                     <td><img src="${list[i].avatar || '/image/default-avatar.jpg'}" class="rounded-circle" width="35"></td>
                     <td>${list[i].id}</td>
                     <td>${list[i].fullname}</td>
@@ -49,11 +50,7 @@ async function loadUsers(page) {
                 </tr>`
     }
     document.getElementById("list-user").innerHTML = main
-    var mainpage = ''
-    for (i = 1; i <= totalPage; i++) {
-        mainpage += `<li onclick="loadUsers(${(Number(i) - 1)})" class="page-item"><a class="page-link" href="#">${i}</a></li>`
-    }
-    document.getElementById("pagination").innerHTML = mainpage
+    pageable(page, totalPage, "loadUsers");
 }
 
 

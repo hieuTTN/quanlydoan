@@ -1,6 +1,7 @@
 package com.web.api;
 
 import com.web.entity.Company;
+import com.web.repository.CompanyRepository;
 import com.web.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,9 @@ public class CompanyApi {
     @Autowired
     private CompanyService companyService;
 
+    @Autowired
+    private CompanyRepository companyRepository;
+
     @PostMapping("/admin/create-update")
     public Company create(@RequestBody Company company){
         return companyService.save(company);
@@ -24,6 +28,11 @@ public class CompanyApi {
     @GetMapping("/public/find-all")
     public Page<Company> getAll(Pageable pageable, @RequestParam(required = false) String search){
         return companyService.findAll(search, pageable);
+    }
+
+    @GetMapping("/public/find-all-list")
+    public List<Company> getAll(){
+        return companyRepository.findAllList();
     }
 
     @GetMapping("/public/find-by-id")

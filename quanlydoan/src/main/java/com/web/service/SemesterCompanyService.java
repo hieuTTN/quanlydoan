@@ -50,6 +50,7 @@ public class SemesterCompanyService {
             SemesterCompany semesterCompany = new SemesterCompany();
             semesterCompany.setSemester(semester);
             semesterCompany.setCompany(company);
+            semesterCompany.setDescription(i.getDescription());
             semesterCompany.setMaxStudent(i.getMaxStudent());
             semesterCompany.setCurrentStudent(0);
 
@@ -79,6 +80,7 @@ public class SemesterCompanyService {
     public Map<String, String> update(SemesterCompanyRequest.SemesterCompanyUpdate request) {
         SemesterCompany semesterCompany = semesterCompanyRepository.findById(request.getId()).orElseThrow(() -> new MessageException("Không tìm thấy dữ liệu"));
         semesterCompany.setMaxStudent(request.getMaxStudent());
+        semesterCompany.setDescription(request.getDescription());
         semesterCompanyRepository.save(semesterCompany);
         return Map.of("message", "Cập nhật thành công");
     }
