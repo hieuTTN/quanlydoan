@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -67,11 +69,22 @@ public class DocumentApi {
         return map;
     }
 
+    @DeleteMapping("/admin-teacher/delete-detail")
+    public Map<String, String> deleteDetail(@RequestParam Long idDetail){
+        Map<String, String> map = documentService.deleteDetail(idDetail);
+        return map;
+    }
+
     @PostMapping("/admin/update-status")
     public Map<String, Object> updateStatus(@RequestParam Long id, @RequestParam DocumentStatus status){
         Map<String, Object> map = documentService.updateStatus(id, status);
         return map;
     }
 
+
+    @GetMapping("/admin-teacher/document-status")
+    public List<DocumentStatus> getAllStatus(){
+        return Arrays.asList(DocumentStatus.values());
+    }
 
 }

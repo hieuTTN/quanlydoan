@@ -50,6 +50,8 @@ async function uploadMultipleFile(listFile) {
     }
 }
 
+
+
 var token = localStorage.getItem("token");
 
 async function getMethod(url) {

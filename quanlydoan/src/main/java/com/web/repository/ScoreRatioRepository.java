@@ -17,4 +17,7 @@ public interface ScoreRatioRepository extends JpaRepository<ScoreRatio, Long> {
 
     @Query("select s from ScoreRatio s where s.semester.id = ?1")
     List<ScoreRatio> findBySemesterId(Long semesterId);
+
+    @Query("select coalesce(sum(s.percent),0) from ScoreRatio s where s.semester.id = ?1")
+    Float sumPercentBySemester(Long semesterId);
 }

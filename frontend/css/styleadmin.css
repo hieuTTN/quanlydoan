@@ -365,3 +365,150 @@ body {
     font-weight: 600;
     margin-bottom: 20px;
 }
+/* container table */
+#example{
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+/* header */
+#example thead{
+    background: linear-gradient(135deg,#4e73df,#224abe);
+    color: white;
+    font-weight: 600;
+}
+
+#example thead th{
+    border: none;
+    padding: 14px;
+    font-size: 14px;
+    letter-spacing: .3px;
+}
+
+/* body */
+#example tbody tr{
+    border-bottom: 1px solid #f1f1f1;
+    transition: all .25s ease;
+}
+
+/* hover effect */
+#example tbody tr:hover{
+    background: #f8f9ff;
+    transform: scale(1.01);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* cell */
+#example tbody td{
+    padding: 14px;
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+/* avatar image */
+#example img{
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: .3s;
+}
+
+#example img:hover{
+    transform: scale(1.1);
+}
+
+/* button action */
+.action-btn{
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 13px;
+    transition: .2s;
+}
+
+.action-btn:hover{
+    transform: translateY(-2px);
+}
+
+/* fade animation khi load row */
+.fade-row{
+    animation: fadeInUp .35s ease;
+}
+
+@keyframes fadeInUp{
+    from{
+        opacity:0;
+        transform: translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform: translateY(0);
+    }
+}
+
+
+.btn-upload-multifile{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 10px 22px;
+    border: none;
+    border-radius: 10px;
+
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+
+    background: linear-gradient(135deg,#4facfe,#00f2fe);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+/* icon */
+.btn-upload-multifile i{
+    font-size: 16px;
+    transition: transform .3s;
+}
+
+/* hover */
+.btn-upload-multifile:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+}
+
+/* icon bay lên khi hover */
+.btn-upload-multifile:hover i{
+    transform: translateY(-2px) scale(1.15);
+}
+
+/* click effect */
+.btn-upload-multifile:active{
+    transform: scale(.96);
+}
+
+/* ánh sáng chạy */
+.btn-upload-multifile::before{
+    content: "";
+    position: absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.4),
+        transparent
+    );
+    transition: .6s;
+}
+
+.btn-upload-multifile:hover::before{
+    left:100%;
+}

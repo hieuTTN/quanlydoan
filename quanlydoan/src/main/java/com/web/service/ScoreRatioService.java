@@ -31,11 +31,18 @@ public class ScoreRatioService {
 
         ScoreRatio scoreRatio;
 
+        Float totalPercent = scoreRatioRepository.sumPercentBySemester(request.getSemesterId());
+
         if(request.getId() == null){
 
             if(scoreRatioRepository.existsByNameAndSemesterId(request.getName(), request.getSemesterId())){
                 throw new MessageException("Tên tỷ lệ điểm đã tồn tại trong học kỳ");
             }
+
+            if(totalPercent + request.getPercent() > 100){
+                throw new MessageException("Tổng tỷ lệ điểm trong học kỳ không được vượt quá 100%, chỉ còn: "+(100 - totalPercent)+" %");
+            }
+
 
             scoreRatio = new ScoreRatio();
         }
@@ -48,6 +55,13 @@ public class ScoreRatioService {
                 if(scoreRatioRepository.existsByNameAndSemesterId(request.getName(), request.getSemesterId())){
                     throw new MessageException("Tên tỷ lệ điểm đã tồn tại trong học kỳ");
                 }
+            }
+
+            Float newTotal = totalPercent - scoreRatio.getPercent() + request.getPercent();
+
+            if(newTotal > 100){
+                Float remain = 100 - (totalPercent - scoreRatio.getPercent());
+                throw new MessageException("Tổng tỷ lệ điểm trong học kỳ không được vượt quá 100%, chỉ còn: "+remain+" %");
             }
         }
 

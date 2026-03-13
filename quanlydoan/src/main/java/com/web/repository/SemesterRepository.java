@@ -4,9 +4,13 @@ import com.web.entity.Semester;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface SemesterRepository extends JpaRepository<Semester, Long> {
+
+    @Query("SELECT s from Semester s order by s.isActive desc ")
+    List<Semester> findAll();
 
     Optional<Semester> findByIsActiveTrue();
 

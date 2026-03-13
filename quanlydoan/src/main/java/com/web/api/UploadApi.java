@@ -1,4 +1,5 @@
 package com.web.api;
+import com.web.dto.response.FileDto;
 import com.web.dto.response.UploadResponse;
 import com.web.utils.CloudinaryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,6 +104,42 @@ public class UploadApi {
                 return o1.getId() - o2.getId();
             }
         });
+        return list;
+    }
+
+    @PostMapping("/public/upload-multiple-file-name")
+    public List<FileDto> uploadFileName(@RequestParam("file") List<MultipartFile> file){
+        List<FileDto> list = new ArrayList<>();
+        ExecutorService es = Executors.newCachedThreadPool();
+        for(int i=0; i<file.size(); i++) {
+            Integer x=i;
+            es.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        String image = cloudinaryService.uploadFile(file.get(x));
+                        FileDto fileDto = new FileDto();
+                        fileDto.setLink(image);
+                        fileDto.setName(file.get(x).getName());
+                        fileDto.setOriName(file.get(x).getOriginalFilename());
+                        fileDto.setType(file.get(x).getContentType());
+                        list.add(fileDto);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+        es.shutdown();
+        try {
+            boolean finished = es.awaitTermination(100000, TimeUnit.MINUTES);
+            if (finished) {
+                return list;
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         return list;
     }
 }

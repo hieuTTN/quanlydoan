@@ -171,4 +171,8 @@ public class DocumentService {
         return map;
     }
 
+    public Map<String, String> deleteDetail(Long idDetail) {
+        documentDetailRepository.deleteById(idDetail);
+        return Map.of("message","Xóa file thành công");
+    }
 }
