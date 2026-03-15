@@ -64,10 +64,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/*/teacher-student/**").hasAnyAuthority(Contains.ROLE_TEACHER, Contains.ROLE_STUDENT)
                 .antMatchers("/api/*/student-teacher/**").hasAnyAuthority(Contains.ROLE_TEACHER, Contains.ROLE_STUDENT)
                 .antMatchers("/api/*/admin/**").hasAuthority(Contains.ROLE_ADMIN)
+                .antMatchers("/admin/**").hasAuthority(Contains.ROLE_ADMIN)
                 .antMatchers("/api/*/student/**").hasAuthority(Contains.ROLE_STUDENT)
+                .antMatchers("/student/**").hasAuthority(Contains.ROLE_STUDENT)
                 .antMatchers("/api/*/all/**").hasAnyAuthority(Contains.ROLE_ADMIN, Contains.ROLE_TEACHER, Contains.ROLE_STUDENT)
                 .antMatchers("/api/*/public/**").permitAll()
                 .anyRequest().permitAll()
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .deleteCookies("JWT_TOKEN") // Xóa cookie khi logout
+                .logoutSuccessUrl("/login")
                 .and()
                 .apply(securityConfigurerAdapter());
     }

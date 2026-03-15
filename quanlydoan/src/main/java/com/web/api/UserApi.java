@@ -21,6 +21,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -71,8 +73,13 @@ public class UserApi {
 
     /*token device get from firebase*/
     @PostMapping("/login/email")
-    public TokenDto authenticate(@RequestBody LoginDto loginDto) throws Exception {
+    public TokenDto authenticate(@RequestBody LoginDto loginDto, HttpServletResponse response) throws Exception {
         TokenDto tokenDto = userService.login(loginDto.getUsername(), loginDto.getPassword(), loginDto.getTokenFcm());
+        Cookie cookie = new Cookie("JWT_TOKEN", tokenDto.getToken());
+        cookie.setHttpOnly(true); // Bảo mật chống XSS
+        cookie.setPath("/");
+        cookie.setMaxAge(604800); // Khớp với JWT_EXPIRATION (7 ngày)
+        response.addCookie(cookie);
         return tokenDto;
     }
 

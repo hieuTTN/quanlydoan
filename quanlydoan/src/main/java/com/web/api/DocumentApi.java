@@ -57,6 +57,11 @@ public class DocumentApi {
         return result;
     }
 
+    @PostMapping("/public/up-download")
+    public void upDownload(@RequestParam Long id){
+        documentService.upDownload(id);
+    }
+
     @GetMapping("/admin-teacher/find-by-id")
     public Document getDocumentDetailPrivate(@RequestParam Long id){
         Document result = documentService.findByPrivate(id);

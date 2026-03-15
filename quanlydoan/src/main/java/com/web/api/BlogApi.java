@@ -32,8 +32,8 @@ public class BlogApi {
     }
 
     @GetMapping("/public/findAll")
-    public ResponseEntity<?> findAll(Pageable pageable){
-        Page<BlogResponse> result = blogService.findAll(pageable);
+    public ResponseEntity<?> findAll(Pageable pageable, @RequestParam(required = false) String search, @RequestParam(required = false) Long category){
+        Page<BlogResponse> result = blogService.findAll(pageable,search, category);
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 

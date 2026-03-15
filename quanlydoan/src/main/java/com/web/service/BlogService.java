@@ -61,10 +61,20 @@ public class BlogService {
         blogRepository.delete(blog.get());
     }
 
-    public Page<BlogResponse> findAll(Pageable pageable) {
-        Page<Blog> page = blogRepository.findAll(pageable);
-//        Page<BlogResponse> result = page.map(this::convertToResponse);
-        Page<BlogResponse> result = page.map(blog-> blogMapper.blogToResponse(blog));
+    public Page<BlogResponse> findAll(Pageable pageable,String search,Long category) {
+        Page<Blog> list;
+
+        if(category != null){
+            list = blogRepository.findByCategoryId(category, pageable);
+        }
+        else if(search != null && !search.isEmpty()){
+            list = blogRepository.search(search, pageable);
+        }
+        else{
+            list = blogRepository.findAll(pageable);
+        }
+
+        Page<BlogResponse> result = list.map(blog-> blogMapper.blogToResponse(blog));
         return result;
     }
 

@@ -130,6 +130,18 @@ public class DocumentService {
         return document;
     }
 
+    public void upDownload(Long id){
+        Document document = documentRepository.findById(id).orElseThrow(() -> new MessageException("Không tìm thấy tài liệu với id: "+id));
+        if(!document.getStatus().equals(DocumentStatus.DANG_HIEN_THI)){
+            throw new MessageException("Tài liệu không thể hiển thị");
+        }
+        if(document.getNumberDownload() == null){
+            document.setNumberDownload(0);
+        }
+        document.setNumberDownload(document.getNumberDownload() + 1);
+        documentRepository.save(document);
+    }
+
     public Document findByPrivate(Long id){
         User user = userUtils.getUserWithAuthority();
         Document document = documentRepository.findById(id).orElseThrow(() -> new MessageException("Không tìm thấy tài liệu với id: "+id));
