@@ -1,6 +1,7 @@
 package com.web.api;
 
 import com.web.dto.request.SemesterTypeRequest;
+import com.web.dto.response.SemesterTypeResponse;
 import com.web.entity.SemesterType;
 import com.web.enums.DocumentStatus;
 import com.web.enums.InternshipType;
@@ -39,6 +40,11 @@ public class SemesterTypeApi {
         return semesterTypeService.findById(id);
     }
 
+    @GetMapping("/public/find-by-type")
+    public SemesterTypeResponse findByType(@RequestParam InternshipType type){
+        return semesterTypeService.findByType(type);
+    }
+
 
     @DeleteMapping("/admin/delete")
     public Map<String,String> delete(@RequestParam Long id){
@@ -49,4 +55,5 @@ public class SemesterTypeApi {
     public List<InternshipType> getAllStatus(){
         return Arrays.asList(InternshipType.values());
     }
+
 }

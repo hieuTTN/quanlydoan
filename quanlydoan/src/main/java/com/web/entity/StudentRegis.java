@@ -1,6 +1,7 @@
 package com.web.entity;
 
 import com.web.enums.InternshipType;
+import com.web.enums.StudentRegisStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,6 +28,8 @@ public class StudentRegis {
 
     private String companyPhone;
 
+    private String companyEmail;
+
     private String taxCode;
 
     private String introductionPaper;
@@ -34,6 +37,9 @@ public class StudentRegis {
     private Float totalScore;
 
     private String evaluate;
+
+    @Enumerated(EnumType.STRING)
+    private StudentRegisStatus studentRegisStatus;
 
     @Enumerated(EnumType.STRING)
     private InternshipType internshipType;

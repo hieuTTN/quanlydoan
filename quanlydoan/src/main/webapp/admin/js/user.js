@@ -35,6 +35,7 @@ async function loadUsers(page) {
                     <td><img src="${list[i].avatar || '/image/default-avatar.jpg'}" class="rounded-circle" width="35"></td>
                     <td>${list[i].id}</td>
                     <td>${list[i].fullname}</td>
+                    <td>${list[i].code}</td>
                     <td>${list[i].email}</td>
                     <td>${list[i].phone == null?'':list[i].phone}</td>
                     <td>${list[i].authorities.name}</td>
@@ -83,7 +84,8 @@ async function saveUser() {
         email: document.getElementById("email").value,
         phone: document.getElementById("phone").value,
         password: document.getElementById("password").value,
-        actived: document.getElementById("actived").checked,     
+        code: document.getElementById("code").value,
+        actived: document.getElementById("actived").checked,
         avatar: document.getElementById("avatar").value,
         authorities: {
             name:document.getElementById("roles").value
@@ -140,10 +142,12 @@ async function loadAUser() {
             })
         });
         var result = await response.json();
+        console.log(result)
         
         document.getElementById("fullName").value = result.fullname
         document.getElementById("email").value = result.email
         document.getElementById("phone").value = result.phone
+        document.getElementById("code").value = result.code
         document.getElementById("actived").checked = result.actived
         document.getElementById("avatar").value = result.avatar
         if(result.avatar){
@@ -182,6 +186,7 @@ async function toggleUserStatus(userId, type) {
         toastr.error("Cập nhật trạng thái thất bại");
     }
 }
+
 async function deleteUser(id) {
     // 1. Hiển thị thông báo xác nhận trước khi làm gì khác
     swal({

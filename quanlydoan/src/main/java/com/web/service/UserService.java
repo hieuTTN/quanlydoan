@@ -437,11 +437,17 @@ public class UserService {
             if(userRepository.findByEmailAndId(update.getEmail(), update.getId()) != null){
                 throw new MessageException("Email đã được sử dụng cho tài khoản khác");
             }
+            if(userRepository.findByCode(update.getCode(), update.getId()).isPresent()){
+                throw new MessageException("Mã sinh viên/ giảng viên đã được sử dụng cho tài khoản khác");
+            }
         }
         else{
             user = new User();
             if(userRepository.findByEmail(update.getEmail()).isPresent()){
                 throw new MessageException("Email đã được sử dụng cho tài khoản khác");
+            }
+            if(userRepository.findByCode(update.getCode()).isPresent()){
+                throw new MessageException("Mã sinh viên/ giảng viên đã được sử dụng cho tài khoản khác");
             }
             if(update.getPassword() == null || update.getPassword().trim().equals("")){
                 throw new MessageException("Mật khẩu không được để trống");
@@ -449,6 +455,7 @@ public class UserService {
         }
         user.setEmail(update.getEmail());
         user.setUsername(update.getEmail());
+        user.setCode(update.getCode());
         user.setAvatar(update.getAvatar());
         user.setFullname(update.getFullname());
         user.setPhone(update.getPhone());

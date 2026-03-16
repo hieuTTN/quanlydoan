@@ -1,4 +1,4 @@
-
+var exceptionCode = 417;
 var firstUrl = 'http://localhost:8080'
 async function uploadSingleFile(filePath) {
     const formData = new FormData()

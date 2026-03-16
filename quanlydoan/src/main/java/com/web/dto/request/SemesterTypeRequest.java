@@ -4,6 +4,7 @@ import com.web.enums.InternshipType;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,8 @@ public class SemesterTypeRequest {
     private InternshipType type;
 
     private Long semesterId;
+
+    private LocalDateTime deadlineRegis;
 
     private List<SemesterTeacherRequest> semesterTeacherRequests = new ArrayList<>();
 

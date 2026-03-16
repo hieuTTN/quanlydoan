@@ -1,15 +1,11 @@
 package com.web.service;
 
 import com.web.dto.request.SemesterTypeRequest;
-import com.web.entity.Semester;
-import com.web.entity.SemesterTeacher;
-import com.web.entity.SemesterType;
-import com.web.entity.User;
+import com.web.dto.response.SemesterTypeResponse;
+import com.web.entity.*;
+import com.web.enums.InternshipType;
 import com.web.exception.MessageException;
-import com.web.repository.SemesterRepository;
-import com.web.repository.SemesterTeacherRepository;
-import com.web.repository.SemesterTypeRepository;
-import com.web.repository.UserRepository;
+import com.web.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +26,9 @@ public class SemesterTypeService {
 
     @Autowired
     private SemesterRepository semesterRepository;
+
+    @Autowired
+    private SemesterCompanyRepository semesterCompanyRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -53,6 +52,7 @@ public class SemesterTypeService {
 
         semesterType.setType(request.getType());
         semesterType.setSemester(semester);
+        semesterType.setDeadlineRegis(request.getDeadlineRegis());
 
         semesterTypeRepository.save(semesterType);
 
@@ -110,4 +110,21 @@ public class SemesterTypeService {
         return semesterTypeRepository.findByParamAndSemester(semesterId);
     }
 
+    public SemesterTypeResponse findByType(InternshipType type) {
+        SemesterTypeResponse response = new SemesterTypeResponse();
+        SemesterType semesterType = semesterTypeRepository.findByType(type);
+        if(semesterType == null){
+            throw new MessageException("Xin lỗi, loại thực tập này chưa được mở");
+        }
+        List<SemesterTeacher> semesterTeachers = semesterTeacherRepository.findBySesType(semesterType.getId());
+        response.setSemester(semesterType.getSemester());
+        response.setType(type);
+        response.setId(semesterType.getId());
+        response.setSemesterTeachers(semesterTeachers);
+
+        List<SemesterCompany> semesterCompanies = semesterCompanyRepository.findBySemesterId(semesterType.getSemester().getId());
+        response.setSemesterCompanies(semesterCompanies);
+
+        return response;
+    }
 }

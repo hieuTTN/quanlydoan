@@ -62,4 +62,10 @@ public interface UserRepository extends JpaRepository<User,Long>, JpaSpecificati
 
     @Query("select u from User u where u.email = ?1 and u.id <> ?2")
     User findByEmailAndId(String email, Long id);
+
+    @Query("select u from User u where lower(u.code) = lower(?1)")
+    Optional<User> findByCode(String code);
+
+    @Query("select u from User u where lower(u.code) = lower(?1) and u.id <> ?2")
+    Optional<User> findByCode(String code, Long id);
 }

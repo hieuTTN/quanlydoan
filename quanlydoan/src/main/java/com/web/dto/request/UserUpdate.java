@@ -16,6 +16,8 @@ public class UserUpdate {
 
     private String email;
 
+    private String code;
+
     private String password;
 
     private Authority authorities;

@@ -23,6 +23,11 @@ public class StudentRegisApi {
         return studentRegisService.create(request);
     }
 
+    @GetMapping("/public/create")
+    public void createss(){
+        studentRegisService.createAll();
+    }
+
     @GetMapping("/student/my-regis")
     public List<StudentRegis> myRegis(){
         return studentRegisService.myRegis();

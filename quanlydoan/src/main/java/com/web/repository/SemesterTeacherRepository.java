@@ -2,6 +2,7 @@ package com.web.repository;
 
 import com.web.entity.SemesterTeacher;
 import com.web.entity.User;
+import com.web.enums.InternshipType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -15,4 +16,10 @@ public interface SemesterTeacherRepository extends JpaRepository<SemesterTeacher
 
     @Query("select s from SemesterTeacher s where s.semesterType.id = ?1")
     List<SemesterTeacher> findBySesType(Long sesTypeId);
+
+    @Query("select s from SemesterTeacher s where s.semesterType.type = ?1 and s.semesterType.semester.isActive = true")
+    List<SemesterTeacher> findByTypeAndSemesterActive(InternshipType type);
+
+    @Query("select s from SemesterTeacher s where s.semesterType.semester.isActive = true")
+    List<SemesterTeacher> findByTypeAndSemesterActive();
 }

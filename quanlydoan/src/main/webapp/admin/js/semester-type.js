@@ -56,6 +56,9 @@ async function loadSemesterType() {
                     <td>${list[i].id}</td>
                     <td>${list[i].type.displayName}</td>
                     <td>${list[i].semester.yearName}</td>
+                    <td>${list[i].createdDate}</td>
+                    <td>${list[i].updateDate}</td>
+                    <td>${list[i].deadlineRegis}</td>
                     <td class="sticky-col">
                         <button onclick="deleteData(${list[i].id})" class="btn btn-sm btn-danger"><i class="bi bi-trash"></i></button>
                         <a href="add-semester-type?id=${list[i].id}" class="btn btn-sm btn-primary"><i class="bi bi-pencil"></i></a>
@@ -72,6 +75,7 @@ async function saveSemesterType() {
         "id":id,
         "semesterId": document.getElementById("semester").value,
         "type": document.getElementById("statusValue").value,
+        "deadlineRegis": document.getElementById("deadlineRegis").value,
         "semesterTeacherRequests": []
     }
     var listIdTeacher = $("#teachers").val();
@@ -129,6 +133,7 @@ async function loadASemesterType() {
         }
         var result = await response.json();
         document.getElementById("statusValue").value = result.type.name
+        document.getElementById("deadlineRegis").value = result.deadlineRegis
         document.getElementById(`status-${result.type.name}`).click();
         $("#semester").val(result.semester.id)
 
