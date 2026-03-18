@@ -70,3 +70,4 @@ async function upDownload(){
     var id = uls.searchParams.get("id");
     var response = await postMethod('/api/document/public/up-download?id='+id)
 }
+

@@ -66,6 +66,10 @@ public class DocumentService {
             document.setNumberDownload(optional.getNumberDownload());
             document.setNumberView(optional.getNumberView());
             document.setUser(optional.getUser());
+            document.setStatus(optional.getStatus());
+        }
+        if(document.getStatus() == null){
+            document.setStatus(DocumentStatus.DANG_CHO);
         }
         Document result = documentRepository.save(document);
         for(DocumentRequest.Detail s : dto.getDetails()){
@@ -111,6 +115,29 @@ public class DocumentService {
             if (status != null) {
                 predicates.add(cb.equal(root.get("status"), status));
             }
+            return cb.and(predicates.toArray(new Predicate[0]));
+        }, pageable);
+        return page;
+    }
+
+    public Page<Document> myDocument(String search, Long categoryId, DocumentStatus status, Pageable pageable){
+        Page<Document> page = null;
+        User user = userUtils.getUserWithAuthority();
+        page = documentRepository.findAll((root, query, cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            if (search != null && !search.isEmpty()) {
+                String pattern = "%" + search.toLowerCase() + "%";
+                predicates.add(cb.or(
+                        cb.like(cb.lower(root.get("name")), pattern)
+                ));
+            }
+            if (categoryId != null) {
+                predicates.add(cb.equal(root.get("category").get("id"), categoryId));
+            }
+            if (status != null) {
+                predicates.add(cb.equal(root.get("status"), status));
+            }
+            predicates.add(cb.equal(root.get("user").get("id"), user.getId()));
             return cb.and(predicates.toArray(new Predicate[0]));
         }, pageable);
         return page;

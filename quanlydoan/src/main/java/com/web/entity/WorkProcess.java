@@ -22,6 +22,10 @@ public class WorkProcess {
 
     private String title;
 
+    private Integer onTimeCount = 0;
+
+    private Integer outTimeCount = 0;
+
     @Column(columnDefinition = "TEXT")
     private String description;
 

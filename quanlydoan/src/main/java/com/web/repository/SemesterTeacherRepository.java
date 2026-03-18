@@ -14,6 +14,9 @@ public interface SemesterTeacherRepository extends JpaRepository<SemesterTeacher
     @Query("select s from SemesterTeacher s where s.teacher.id = ?1 and s.semesterType.id = ?2")
     Optional<SemesterTeacher> findByTeacherAndSemesterType(Long teacherId, Long id);
 
+    @Query("select s from SemesterTeacher s where s.teacher.id = ?1")
+    List<SemesterTeacher> findByTeacher(Long teacherId);
+
     @Query("select s from SemesterTeacher s where s.semesterType.id = ?1")
     List<SemesterTeacher> findBySesType(Long sesTypeId);
 

@@ -23,4 +23,7 @@ public interface StudentRegisRepository extends JpaRepository<StudentRegis, Long
 
     @Query("select s from StudentRegis s where s.semesterTeacher.semesterType.semester.id = ?1 and s.semesterTeacher.teacher.id = ?2")
     List<StudentRegis> findBySemesterIdAndTeacherId(Long semesterId, Long teacherId);
+
+    @Query("select s from StudentRegis s where s.semesterTeacher.id = ?1")
+    List<StudentRegis> findBySemesterTeacher(Long semesterTeacherId);
 }

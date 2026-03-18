@@ -19,4 +19,6 @@ public class HomeTeacherController {
         model.addAttribute("newBlogs", blogRepository.newBlog());
         return "teacher/index";
     }
+
+
 }

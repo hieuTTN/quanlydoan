@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <th:block th:include="common/user/libuser :: libheader"></th:block>
+  <script src="/teacher/js/request.js"></script>
+  <script src="/teacher/js/project.js"></script>
+</head>
+<body>
+
+<div th:replace="common/teacher/headerUser :: headerUser"></div>
+
+<div class="account-layout content-page-main">
+  <div th:replace="common/teacher/sidebarTeacher :: sidebarMain"></div>
+
+  <div class="account-content">
+    <div class="account-content-inner">
+      <div class="project-info-card">
+        <div class="project-info-header">
+          <div class="project-title">
+            <h4 th:if="${semesterTeacher.projectName != null && semesterTeacher.projectName != ''}"><th:block th:text="${semesterTeacher.projectName}"></th:block></h4>
+            <span class="badge bg-success"
+                  th:if="${semesterTeacher.semesterType.semester.endDate.after(#dates.createNow())}">
+                Đang thực hiện
+            </span>
+            <span class="badge bg-error"
+                  th:if="${semesterTeacher.semesterType.semester.endDate.before(#dates.createNow())}">
+                Đã kết thúc
+            </span>
+            <span th:if="${semesterTeacher.semesterType.type.name=='TAI_TRUONG'}" class="badge bg-primary">Nhóm thực tập tại trường</span>
+            <span th:if="${semesterTeacher.semesterType.type.name=='DOANH_NGHIEP_LIEN_KET'}" class="badge bg-primary">Nhóm công ty liên kết</span>
+            <span th:if="${semesterTeacher.semesterType.type.name=='DOANH_NGHIEP_NGOAI'}" class="badge bg-primary">Nhóm doanh nghiệp ngoài</span>
+          </div>
+        </div>
+
+        <div class="project-info-body">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="info-item" th:if="${semesterTeacher.descriptionProject != null && semesterTeacher.descriptionProject != ''}">
+                <label>Mô tả:</label>
+                <p th:text="${semesterTeacher.descriptionProject}">
+                </p>
+              </div>
+              <div class="info-item">
+                <label>Giảng viên hướng dẫn:</label>
+                <span th:text="${semesterTeacher.teacher.fullname}"></span>
+              </div>
+
+              <div class="info-item">
+                <label>Thời gian:</label>
+                <span>
+                    <th:block th:text="${#dates.format(semesterTeacher.semesterType.semester.startDate, 'dd-MM-yyyy')}"></th:block>
+                    -
+                    <th:block th:text="${#dates.format(semesterTeacher.semesterType.semester.endDate, 'dd-MM-yyyy')}"></th:block>
+                </span>
+              </div>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="col-md-4">
+              <div class="info-box">
+                <div class="info-box-item">
+                  <span>Sinh viên</span>
+                  <strong><th:block th:text="${semesterTeacher.currentStudents}"></th:block> / <th:block th:text="${semesterTeacher.maxStudents}"></th:block></strong>
+                </div>
+
+                <div class="info-box-item">
+                  <span>Còn </span>
+                  <strong><span th:text="${(semesterTeacher.semesterType.semester.endDate.time - #dates.createNow().time) / (1000 * 60 * 60 * 24)}"></span> ngày kết thúc đồ án</strong>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="account-tabs-containers">
+
+        <!-- TAB HEADER -->
+        <div class="account-tabs">
+          <div class="account-tab active" data-tab="tab0">Đoạn chat chung</div>
+          <div class="account-tab" data-tab="tab1">Danh sách sinh viên <span class="number-tab" th:text="${studentRegis.size()}"></span></div>
+          <div class="account-tab" data-tab="tab2">Báo cáo tiến độ <span class="number-tab" th:text="${workProcesses.size()}"></span></div>
+          <div class="account-tab" data-tab="tab3">Nộp giấy tờ</div>
+          <div class="account-tab" data-tab="tab4">File</div>
+          <div class="account-tab" data-tab="tab5">Đánh giá</div>
+          <div class="account-tab-indicator"></div>
+        </div>
+
+        <!-- TAB CONTENT -->
+        <div class="account-tab-content">
+          <div class="account-tab-pane active" id="tab0">
+            Nội dung chat chung
+          </div>
+          <div class="account-tab-pane" id="tab1">
+            <div th:replace="teacher/project/studentlist :: studentList"></div>
+          </div>
+          <div class="account-tab-pane" id="tab2">
+            <div th:replace="teacher/project/work :: work"></div>
+          </div>
+          <div class="account-tab-pane" id="tab3">
+            Nội dung nộp giấy tờ
+          </div>
+          <div class="account-tab-pane" id="tab4">
+            Nội dung file
+          </div>
+          <div class="account-tab-pane" id="tab5">
+            Nội dung đánh giá
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:replace="common/user/footeruser :: footerMain"></div>
+
+<script>
+  const tabs = document.querySelectorAll(".account-tab");
+  const panes = document.querySelectorAll(".account-tab-pane");
+  const indicator = document.querySelector(".account-tab-indicator");
+
+  function moveIndicator(tab) {
+    indicator.style.width = tab.offsetWidth + "px";
+    indicator.style.left = tab.offsetLeft + "px";
+  }
+
+  function activateTab(tabId) {
+    const tab = document.querySelector(`.account-tab[data-tab="${tabId}"]`);
+    const pane = document.getElementById(tabId);
+
+    if (tab && pane) {
+      tabs.forEach(t => t.classList.remove("active"));
+      panes.forEach(p => p.classList.remove("active"));
+
+      tab.classList.add("active");
+      pane.classList.add("active");
+
+      moveIndicator(tab);
+    }
+  }
+
+  // CLICK TAB
+  tabs.forEach(tab => {
+    tab.addEventListener("click", function () {
+      const tabId = this.dataset.tab;
+
+      activateTab(tabId);
+
+      // 👉 cập nhật URL mà không reload
+      history.replaceState(null, null, '#' + tabId);
+    });
+  });
+
+  // LOAD PAGE → đọc hash
+  function loadTabFromHash() {
+    const hash = window.location.hash.substring(1);
+
+    if (hash) {
+      activateTab(hash);
+
+      // 👉 kéo lại lên top (nếu bị nhảy)
+      window.scrollTo(0, 0);
+    } else {
+      moveIndicator(document.querySelector(".account-tab.active"));
+    }
+  }
+
+  // chạy khi load
+  loadTabFromHash();
+
+  // optional: khi user bấm back/forward
+  window.addEventListener("hashchange", () => {
+    const hash = window.location.hash.substring(1);
+    activateTab(hash);
+  });
+  document.addEventListener("DOMContentLoaded", function () {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+    $('#table-student').DataTable();
+  });
+
+</script>
+
+</body>
+</html>

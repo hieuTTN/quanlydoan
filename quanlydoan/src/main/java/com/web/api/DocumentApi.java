@@ -46,10 +46,17 @@ public class DocumentApi {
     }
 
     @GetMapping("/teacher/my-document")
-    public Page<Document> getMyDocument(Pageable pageable){
-        Page<Document> page = documentService.myDocument(pageable);
+    public Page<Document> myDocument(@RequestParam(required = false) String search,@RequestParam(required = false) DocumentStatus status,
+                                        @RequestParam(required = false) Long categoryId,Pageable pageable){
+        Page<Document> page = documentService.myDocument(search, categoryId, status,  pageable);
         return page;
     }
+
+//    @GetMapping("/teacher/my-document")
+//    public Page<Document> getMyDocument(Pageable pageable){
+//        Page<Document> page = documentService.myDocument(pageable);
+//        return page;
+//    }
 
     @GetMapping("/public/find-by-id")
     public Document getDocumentDetailPublic(@RequestParam Long id){
