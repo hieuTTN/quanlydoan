@@ -1,0 +1,77 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+</head>
+<body>
+<div th:fragment="chatContains">
+    <div class="chatroom-container container-fluid">
+        <div class="row h-100">
+
+            <!-- CHAT CONTENT -->
+            <div class="col-12 d-flex flex-column chat-wrapper">
+
+                <!-- HEADER -->
+                <div class="chat-header d-flex align-items-center">
+                    <img src="avatar.jpg" class="chat-header-avatar">
+                    <div>
+                        <div class="chat-title">Phòng chat đồ án</div>
+                        <small class="chat-status">Đang hoạt động</small>
+                    </div>
+                </div>
+
+                <!-- MESSAGE LIST -->
+                <div class="chat-body" id="chatBody">
+
+                    <!-- MESSAGE (MÌNH) -->
+                    <div class="chat-item my">
+                        <img src="avatar-user.jpg" class="avatar">
+                        <div class="bubble">
+                            <div class="meta">
+                                <span class="name">Bạn</span>
+                                <span class="time">10:30</span>
+                            </div>
+                            <div class="content">Xin chào mọi người 👋</div>
+                        </div>
+                    </div>
+
+                    <!-- MESSAGE (NGƯỜI KHÁC) -->
+                    <div class="chat-item other">
+                        <img src="avatar2.jpg" class="avatar">
+                        <div class="bubble">
+                            <div class="meta">
+                                <span class="name">Nguyễn Văn B</span>
+                                <span class="time">10:32</span>
+                            </div>
+                            <div class="content">Chào bạn nhé!</div>
+                        </div>
+                    </div>
+
+                    <!-- IMAGE -->
+                    <div class="chat-item my">
+                        <img src="avatar-user.jpg" class="avatar">
+                        <div class="bubble">
+                            <div class="meta">
+                                <span class="name">Bạn</span>
+                                <span class="time">10:33</span>
+                            </div>
+                            <img src="image.jpg" class="chat-img">
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- INPUT -->
+                <div class="chat-footer">
+                    <textarea id="editor" class="teacher-project-detail"></textarea>
+                    <button class="btn btn-primary btn-send">
+                        <i class="fa fa-paper-plane"></i> Gửi
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

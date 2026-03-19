@@ -20,7 +20,7 @@
         <i class="bi bi-file-pdf"></i>
         <span>Tài liệu của tôi</span>
       </a>
-      <a href="/teacher/project" class="account-menu-item" data-urls="/teacher/project">
+      <a href="/teacher/project" class="account-menu-item" data-urls="/teacher/project, /teacher/work-student, /teacher/document-student, /teacher/student-dashboard">
         <i class="bi bi-list"></i>
         <span>Quản lý đồ án</span>
       </a>
@@ -38,7 +38,6 @@
     document.addEventListener("DOMContentLoaded", function () {
 
       let currentPath = window.location.pathname;
-
       document.querySelectorAll(".account-menu-item").forEach(item => {
 
         let urls = item.dataset.urls;
@@ -48,7 +47,7 @@
         let list = urls.split(",");
 
         list.forEach(url => {
-          if(currentPath.startsWith(url.trim())){
+          if(currentPath.includes(url.trim())){
             item.classList.add("active");
           }
         });

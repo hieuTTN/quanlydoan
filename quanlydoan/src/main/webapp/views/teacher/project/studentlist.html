@@ -72,7 +72,7 @@
       </td>
       <td><span th:text="${c.studentRegisStatus.displayName}" class="badge" th:style="'background-color:' + ${c.studentRegisStatus.color}"></span></td>
       <td>
-        <button class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></button>
+        <a th:href="'/teacher/student-dashboard/'+${c.id}" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></a>
       </td>
     </tr>
     </tbody>

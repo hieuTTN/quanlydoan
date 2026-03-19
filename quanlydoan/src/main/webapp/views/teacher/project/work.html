@@ -6,38 +6,37 @@
 <body>
 <div th:fragment="work">
     <div class="teacher-work-wrapper">
+        <div class="teacher-work-header d-flex align-items-center justify-content-between mb-4">
 
-        <div class="teacher-work-header d-flex justify-content-between align-items-center mb-4">
-            <button data-bs-toggle="modal" data-bs-target="#modal-add-word" class="btn teacher-work-btn-add">
-                <i class="bi bi-plus-circle"></i> Thêm yêu cầu cập nhật tiến độ mới
-            </button>
-        </div>
-
-        <div class="teacher-work-group">
-            <h6 class="teacher-work-date">Thứ Ba, ngày 22/04/25</h6>
-
-            <div class="teacher-work-card">
-                <div class="teacher-work-content">
-                    <h6 class="teacher-work-name">Bài tập với String</h6>
-                    <p class="mb-1">Mã bài tập: <b>5</b></p>
-                    <p class="mb-1">Hạn cuối lúc: <b>22:00</b></p>
-                    <small>Số testcase: 0</small>
+            <!-- LEFT: Search + Sort -->
+            <div class="teacher-work-tools d-flex align-items-center gap-3">
+                <div class="teacher-work-search">
+                    <i class="bi bi-search"></i>
+                    <input onkeyup="loadWork(0)" type="text" placeholder="Tìm kiếm yêu cầu..." id="work-search">
                 </div>
-
-                <div class="teacher-work-actions">
-                    <span class="teacher-work-badge expired">Hết hạn</span>
-
-                    <div class="teacher-work-btn-group">
-                        <button class="btn btn-warning"><i class="bi bi-pencil"></i></button>
-                        <button class="btn btn-danger"><i class="bi bi-x"></i></button>
-                        <button class="btn btn-danger"><i class="bi bi-trash"></i></button>
-                        <button class="btn btn-warning"><i class="bi bi-box"></i></button>
-                    </div>
-                </div>
+                <select onchange="loadWork(0)" class="form-select teacher-work-sort" id="work-sort">
+                    <option value="id,desc">Mới nhất</option>
+                    <option value="id,asc">Cũ nhất</option>
+                    <option value="deadline,asc">Sắp hết hạn</option>
+                    <option value="onTimeCount,desc">Đúng hạn nhiều nhất</option>
+                </select>
             </div>
+            <button onclick="clearDataWork()"
+                    data-bs-toggle="modal" data-bs-target="#modal-add-word"
+                    class="btn teacher-work-btn-add">
+                <i class="bi bi-plus-circle"></i> Thêm yêu cầu
+            </button>
+
         </div>
+        <div id="list-data-work">
+        </div>
+        <nav class="mt-3">
+            <ul id="pagination-work" class="pagination justify-content-center">
+            </ul>
+        </nav>
     </div>
 
+    <input type="hidden" id="totalStudent" th:value="${studentRegis.size()}">
     <div class="modal fade" id="modal-add-word" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
@@ -58,7 +57,7 @@
                             <label>Deadline</label>
                         </div>
                         <label class="mt-3"><strong>Mô tả nội dung tiến độ</strong></label>
-                        <textarea id="contentTienDo" name="contentTienDo"></textarea>
+                        <textarea id="contentTienDo" name="contentTienDo" class="teacher-project-detail"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -68,39 +67,12 @@
             </div>
         </div>
     </div>
-
-
-    <script src="https://cdn.tiny.cloud/1/f6s0gxhkpepxkws8jawvfwtj0l9lv0xjgq1swbv4lgcy3au3/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
-        tinymce.init({
-            selector: 'textarea#contentTienDo', // Chọn textarea có id là 'editor'
-            // Tăng cường các plugin để hỗ trợ nhiều chức năng hơn
-            plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak ' +
-                'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking ' +
-                'table emoticons template paste codesample help',
-            // Định nghĩa các nút trên thanh công cụ. Chia thành nhiều dòng để dễ quản lý.
-            toolbar: 'undo redo | blocks | ' + // Hoàn tác, làm lại, và định dạng khối (Heading 1, 2, Paragraph,...)
-                'bold italic underline strikethrough | forecolor backcolor | ' + // Định dạng chữ: đậm, nghiêng, gạch chân, gạch ngang, màu chữ, màu nền
-                'alignleft aligncenter alignright alignjustify | outdent indent | ' + // Căn lề, lùi dòng
-                'numlist bullist | link image media table | ' + // Danh sách số, danh sách dấu chấm, chèn liên kết, ảnh, video, bảng
-                'charmap emoticons | fullscreen code preview | help', // Ký tự đặc biệt, biểu tượng cảm xúc, chế độ toàn màn hình, xem trước, mã nguồn, trợ giúp
-            height: 600, // Tăng chiều cao của trình soạn thảo
-            menubar: 'file edit view insert format tools table help', // Hiện thêm menu bar ở trên cùng
-            images_upload_handler: async function (blobInfo, success, failure) {
-                const formData = new FormData();
-                formData.append('file', blobInfo.blob(), blobInfo.filename());
-
-                const res = await fetch('http://localhost:8080/api/public/upload-file', {
-                    method: 'POST',
-                    body: formData
-                });
-                if (res.status < 300) {
-                    var linkImage = await res.text();
-                    success(linkImage);
-                }
-            }
+        $( document ).ready(function() {
+            loadWork(0);
         });
     </script>
+
 
 </div>
 </body>

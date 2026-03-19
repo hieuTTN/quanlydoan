@@ -24,7 +24,7 @@ public class PublicController {
             if(user.getAuthorities().getName().equals(Contains.ROLE_STUDENT)){
                 return "redirect:/student/index";
             }
-            if(user.getAuthorities().getName().equals(Contains.ROLE_ADMIN)){
+            if(user.getAuthorities().getName().equals(Contains.ROLE_TEACHER)){
                 return "redirect:/teacher/index";
             }
         }

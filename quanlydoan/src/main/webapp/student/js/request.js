@@ -260,3 +260,46 @@ function pageable(page, totalPage, callback){
 
     document.getElementById("pagination").innerHTML = mainpage;
 }
+
+function formatTime(deadlineStr) {
+    const date = new Date(deadlineStr);
+    const now = new Date();
+
+    // Format giờ phút
+    const time = date.toLocaleTimeString("vi-VN", {
+        hour: "2-digit",
+        minute: "2-digit",
+    });
+
+    // Format thứ + ngày
+    const dateStr = date.toLocaleDateString("vi-VN", {
+        weekday: "long",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+    });
+
+    // ===== TÍNH SỐ NGÀY CÒN LẠI =====
+    const diffMs = date - now; // ms
+    const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+    let status = "";
+    if (diffMs < 0) {
+        status = `<span class="badge bg-error">Đã hết hạn</span>`;
+    } else if (diffDays === 0) {
+        status = `<span class="badge bg-warning">Hết hạn hôm nay</span>`;
+    } else {
+        status = `<span class="badge bg-success">Còn ${diffDays} ngày</span>`;
+    }
+
+    return [time, dateStr, status];
+}
+
+function calDeadline(deadlineStr){
+    if (!deadlineStr) return false;
+
+    const deadline = new Date(deadlineStr);
+    const now = new Date();
+
+    return deadline >= now;
+}

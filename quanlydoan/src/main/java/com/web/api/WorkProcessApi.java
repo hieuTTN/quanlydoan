@@ -1,6 +1,7 @@
 package com.web.api;
 
 import com.web.dto.request.WorkProcessRequest;
+import com.web.dto.response.WorkProcessResponse;
 import com.web.entity.WorkProcess;
 import com.web.service.WorkProcessService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,13 @@ public class WorkProcessApi {
                                      @RequestParam Long semesterTeacherId,
                                      @RequestParam(required = false) String search){
         return workProcessService.findAll(search, semesterTeacherId, pageable);
+    }
+
+    @GetMapping("/student/find-all")
+    public Page<WorkProcessResponse> findAllByStudent(Pageable pageable,
+                                                      @RequestParam Long semesterTeacherId,
+                                                      @RequestParam(required = false) String search){
+        return workProcessService.findAllByStudent(search, semesterTeacherId, pageable);
     }
 
     @GetMapping("/student-teacher/find-by-id")

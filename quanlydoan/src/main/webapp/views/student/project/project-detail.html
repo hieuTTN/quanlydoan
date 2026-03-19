@@ -3,17 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <th:block th:include="common/user/libuser :: libheader"></th:block>
-  <script src="/teacher/js/request.js"></script>
-  <script src="/teacher/js/work.js"></script>
-  <script src="/teacher/js/relate-document.js"></script>
+  <script src="/student/js/request.js"></script>
+  <script src="/student/js/work.js"></script>
+  <script src="/student/js/relate-document.js"></script>
 </head>
 <body>
-
-<div th:replace="common/teacher/headerUser :: headerUser"></div>
-
+<div th:replace="common/user/headerUser :: headerUser"></div>
 <div class="account-layout content-page-main">
-  <div th:replace="common/teacher/sidebarTeacher :: sidebarMain"></div>
-
+  <div th:replace="common/user/sidebarUser :: sidebarMain"></div>
   <div class="account-content">
     <div class="account-content-inner">
       <div class="project-info-card">
@@ -34,45 +31,61 @@
           </div>
         </div>
 
-        <div class="project-info-body">
-          <div class="row">
-            <div class="col-md-8">
-              <div class="info-item" th:if="${semesterTeacher.descriptionProject != null && semesterTeacher.descriptionProject != ''}">
-                <label>Mô tả:</label>
-                <p th:text="${semesterTeacher.descriptionProject}">
-                </p>
-              </div>
-              <div class="info-item">
-                <label>Giảng viên hướng dẫn:</label>
-                <span th:text="${semesterTeacher.teacher.fullname}"></span>
-              </div>
+        <div class="project-info-wrapper">
 
-              <div class="info-item">
-                <label>Thời gian:</label>
-                <span>
-                    <th:block th:text="${#dates.format(semesterTeacher.semesterType.semester.startDate, 'dd-MM-yyyy')}"></th:block>
-                    -
-                    <th:block th:text="${#dates.format(semesterTeacher.semesterType.semester.endDate, 'dd-MM-yyyy')}"></th:block>
-                </span>
-              </div>
-            </div>
-
-            <!-- RIGHT -->
-            <div class="col-md-4">
-              <div class="info-box">
-                <div class="info-box-item">
-                  <span>Sinh viên</span>
-                  <strong><th:block th:text="${semesterTeacher.currentStudents}"></th:block> / <th:block th:text="${semesterTeacher.maxStudents}"></th:block></strong>
-                </div>
-
-                <div class="info-box-item">
-                  <span>Còn </span>
-                  <strong><span th:text="${(semesterTeacher.semesterType.semester.endDate.time - #dates.createNow().time) / (1000 * 60 * 60 * 24)}"></span> ngày kết thúc đồ án</strong>
-                </div>
-              </div>
-            </div>
-
+          <!-- BUTTON -->
+          <div class="text-end mb-2">
+            <button class="btn btn-sm btn-outline-primary toggle-project-info">
+              Thu gọn
+            </button>
           </div>
+
+          <!-- CONTENT -->
+          <div class="project-info-body collapse-box">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="info-item" th:if="${semesterTeacher.descriptionProject != null && semesterTeacher.descriptionProject != ''}">
+                  <label>Mô tả:</label>
+                  <p th:text="${semesterTeacher.descriptionProject}"></p>
+                </div>
+
+                <div class="info-item">
+                  <label>Giảng viên hướng dẫn:</label>
+                  <span th:text="${semesterTeacher.teacher.fullname}"></span>
+                </div>
+
+                <div class="info-item">
+                  <label>Thời gian:</label>
+                  <span>
+            <th:block th:text="${#dates.format(semesterTeacher.semesterType.semester.startDate, 'dd-MM-yyyy')}"></th:block>
+            -
+            <th:block th:text="${#dates.format(semesterTeacher.semesterType.semester.endDate, 'dd-MM-yyyy')}"></th:block>
+          </span>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="info-box">
+                  <div class="info-box-item">
+                    <span>Sinh viên</span>
+                    <strong>
+                      <th:block th:text="${semesterTeacher.currentStudents}"></th:block> /
+                      <th:block th:text="${semesterTeacher.maxStudents}"></th:block>
+                    </strong>
+                  </div>
+
+                  <div class="info-box-item">
+                    <span>Còn </span>
+                    <strong>
+                      <span th:text="${(semesterTeacher.semesterType.semester.endDate.time - #dates.createNow().time) / (1000 * 60 * 60 * 24)}"></span>
+                      ngày kết thúc đồ án
+                    </strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
       <div class="account-tabs-containers">
@@ -80,7 +93,7 @@
         <!-- TAB HEADER -->
         <div class="account-tabs">
           <div class="account-tab active" data-tab="tab0">Đoạn chat chung</div>
-          <div class="account-tab" data-tab="tab1">Danh sách sinh viên <span class="number-tab" th:text="${studentRegis.size()}"></span></div>
+          <div class="account-tab" data-tab="tab1">Thành viên <span class="number-tab" th:text="${studentRegis.size()}"></span></div>
           <div class="account-tab" data-tab="tab2">Báo cáo tiến độ <span class="number-tab" th:text="${workProcesses.size()}"></span></div>
           <div class="account-tab" data-tab="tab3">Nộp giấy tờ <span class="number-tab" th:text="${countRelate}"></span></div>
           <div class="account-tab" data-tab="tab4">File</div>
@@ -91,16 +104,16 @@
         <!-- TAB CONTENT -->
         <div class="account-tab-content">
           <div class="account-tab-pane active" id="tab0">
-            Nội dung chat chung
+            <div th:replace="common/chat/chat :: chatContains"></div>
           </div>
           <div class="account-tab-pane" id="tab1">
-            <div th:replace="teacher/project/studentlist :: studentList"></div>
+            <div th:replace="student/project/studentlist :: studentList"></div>
           </div>
           <div class="account-tab-pane" id="tab2">
-            <div th:replace="teacher/project/work :: work"></div>
+            <div th:replace="student/project/work :: work"></div>
           </div>
           <div class="account-tab-pane" id="tab3">
-            <div th:replace="teacher/project/related-document :: relateDocument"></div>
+            <div th:replace="student/project/related-document :: relateDocument"></div>
           </div>
           <div class="account-tab-pane" id="tab4">
             Nội dung file
@@ -114,8 +127,8 @@
     </div>
   </div>
 </div>
-
 <div th:replace="common/user/footeruser :: footerMain"></div>
+
 <script src="https://cdn.tiny.cloud/1/f6s0gxhkpepxkws8jawvfwtj0l9lv0xjgq1swbv4lgcy3au3/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
   tinymce.init({
@@ -130,7 +143,7 @@
             'alignleft aligncenter alignright alignjustify | outdent indent | ' + // Căn lề, lùi dòng
             'numlist bullist | link image media table | ' + // Danh sách số, danh sách dấu chấm, chèn liên kết, ảnh, video, bảng
             'charmap emoticons | fullscreen code preview | help', // Ký tự đặc biệt, biểu tượng cảm xúc, chế độ toàn màn hình, xem trước, mã nguồn, trợ giúp
-    height: 600, // Tăng chiều cao của trình soạn thảo
+    height: 400, // Tăng chiều cao của trình soạn thảo
     menubar: 'file edit view insert format tools table help ', // Hiện thêm menu bar ở trên cùng
     images_upload_handler: async function (blobInfo, success, failure) {
       const formData = new FormData();
@@ -246,7 +259,14 @@
     });
     $('#table-student').DataTable();
   });
+  document.addEventListener("DOMContentLoaded", function () {
+    const btn = document.querySelector(".toggle-project-info");
+    const wrapper = document.querySelector(".project-info-wrapper");
 
+    btn.addEventListener("click", function () {
+      wrapper.style.display = "none";
+    });
+  });
 </script>
 
 </body>

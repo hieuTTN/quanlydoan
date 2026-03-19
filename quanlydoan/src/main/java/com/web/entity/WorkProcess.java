@@ -31,4 +31,7 @@ public class WorkProcess {
 
     @ManyToOne
     private SemesterTeacher semesterTeacher;
+
+    @Transient
+    private Boolean isSubmitted = false;
 }

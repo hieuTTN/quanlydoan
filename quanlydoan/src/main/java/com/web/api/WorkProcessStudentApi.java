@@ -25,6 +25,11 @@ public class WorkProcessStudentApi {
         return workProcessStudentService.save(request);
     }
 
+    @PostMapping("/teacher/replay/{id}")
+    public WorkProcessStudent replay(@PathVariable("id") Long id, @RequestBody String replay){
+        return workProcessStudentService.replay(id, replay);
+    }
+
     @GetMapping("/student-teacher/find-all")
     public Page<WorkProcessStudent> findAll(Pageable pageable,
                                      @RequestParam Long workProcessId,
@@ -35,6 +40,11 @@ public class WorkProcessStudentApi {
     @GetMapping("/student-teacher/find-by-id")
     public WorkProcessStudent findById(@RequestParam Long id){
         return workProcessStudentService.findById(id);
+    }
+
+    @GetMapping("/student-teacher/find-by-workprocess-id")
+    public Map<String, Object> findByWorkProcess(@RequestParam Long workProcessId){
+        return workProcessStudentService.findByWorkProcess(workProcessId);
     }
 
     @DeleteMapping("/student/delete")

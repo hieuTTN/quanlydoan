@@ -34,7 +34,7 @@ async function loadBlog(page) {
     for (i = 1; i <= totalPage; i++) {
         mainpage += `<li onclick="loadBlog(${(Number(i) - 1)})" class="page-item ${Number(i)-1 == page?'active':''}"><a class="page-link" href="#">${i}</a></li>`
     }
-    document.getElementById("pagination").innerHTML = mainpage
+    document.getElementById("pagination-work").innerHTML = mainpage
 }
 
 async function loadCategorySelect() {
