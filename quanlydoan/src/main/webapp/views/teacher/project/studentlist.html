@@ -5,6 +5,7 @@
 </head>
 <body>
 <div th:fragment="studentList">
+    <script src="/teacher/js/student-regis.js"></script>
   <table id="table-student" class="table table-custome">
     <thead>
     <tr>
@@ -73,6 +74,7 @@
       <td><span th:text="${c.studentRegisStatus.displayName}" class="badge" th:style="'background-color:' + ${c.studentRegisStatus.color}"></span></td>
       <td>
         <a th:href="'/teacher/student-dashboard/'+${c.id}" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i></a>
+          <button th:data-student-regis="${c.id}" onclick="acceptStudent(this)" class="btn btn-sm btn-outline-primary" th:if="${c.studentRegisStatus.name == 'DANG_CHO' || c.studentRegisStatus.name == 'DA_BI_DUOI'}">Duyệt</button>
       </td>
     </tr>
     </tbody>

@@ -37,6 +37,15 @@ public class MessageApi {
     public void sendRoom(SimpMessageHeaderAccessor sha, @Payload String message, @DestinationVariable String id) {
         System.out.println("sha: "+sha.getUser().getName());
         System.out.println("payload: "+message);
-        simpMessagingTemplate.convertAndSend("/topic/chat-room/"+id, message);
+        User sender = userRepository.findById(Long.valueOf(sha.getUser().getName())).get();
+        ChatRoom chatting = new ChatRoom();
+        chatting.setContent(message);
+        chatting.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+        chatting.setSemesterTeacherId(Long.valueOf(id));
+        chatting.setSender(sender);
+        chatRoomRepository.save(chatting);
+        simpMessagingTemplate.convertAndSend("/topic/chat-room/"+id, chatting);
     }
+
+
 }

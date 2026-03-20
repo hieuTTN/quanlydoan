@@ -24,6 +24,5 @@ public class ChatRoom {
     @JoinColumn(name = "sender")
     private User sender;
 
-//    @ManyToOne
-//    private Subject subject;
+    private Long semesterTeacherId;
 }

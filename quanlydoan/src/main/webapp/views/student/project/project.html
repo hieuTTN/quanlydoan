@@ -19,7 +19,15 @@
         </div>
         <div class="row g-4">
           <div class="col-lg-6" th:each="c :${studentRegis}">
-            <div class="account-project-card" th:onclick="|window.location.href='/student/project-detail/' + ${c.id}|">
+            <div class="account-project-card"
+                 th:attr="onclick=${c.studentRegisStatus.name != 'DANG_CHO' && c.studentRegisStatus.name != 'DA_BI_DUOI'}
+     ? |window.location.href='/student/project-detail/' + ${c.id}|
+     : |swal({
+            icon: 'error',
+            title: 'Thông báo',
+            text: 'Bạn không có quyền truy cập vào đồ án này',
+            confirmButtonText: 'OK'
+        })|">
               <div class="account-project-top">
                 <div class="account-project-type" th:text="${c.internshipType.displayName}"></div>
                 <div class="account-project-status badge"

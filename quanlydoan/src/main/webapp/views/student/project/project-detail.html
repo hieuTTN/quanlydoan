@@ -6,7 +6,7 @@
   <script src="/student/js/request.js"></script>
   <script src="/student/js/work.js"></script>
   <script src="/student/js/relate-document.js"></script>
-  <script src="https://cdn.tiny.cloud/1/f6s0gxhkpepxkws8jawvfwtj0l9lv0xjgq1swbv4lgcy3au3/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+  <script src="https://cdn.tiny.cloud/1/ki9cw4sa3ezsjymcgc1p2vpztcc01ou0ctbtjtqbin07c68z/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
 <body>
 <div th:replace="common/user/headerUser :: headerUser"></div>
@@ -86,7 +86,6 @@
           <div class="account-tab" data-tab="tab1">Thành viên <span class="number-tab" th:text="${studentRegis.size()}"></span></div>
           <div class="account-tab" data-tab="tab2">Báo cáo tiến độ <span class="number-tab" th:text="${workProcesses.size()}"></span></div>
           <div class="account-tab" data-tab="tab3">Nộp giấy tờ <span class="number-tab" th:text="${countRelate}"></span></div>
-          <div class="account-tab" data-tab="tab4">File</div>
           <div class="account-tab" data-tab="tab5">Đánh giá</div>
           <div class="account-tab-indicator"></div>
         </div>
@@ -105,11 +104,8 @@
           <div class="account-tab-pane" id="tab3">
             <div th:replace="student/project/related-document :: relateDocument"></div>
           </div>
-          <div class="account-tab-pane" id="tab4">
-            Nội dung file
-          </div>
           <div class="account-tab-pane" id="tab5">
-            Nội dung đánh giá
+            <div th:replace="student/project/rate :: rateContent"></div>
           </div>
         </div>
 
@@ -117,7 +113,6 @@
     </div>
   </div>
 </div>
-<div th:replace="common/user/footeruser :: footerMain"></div>
 
 <script>
   tinymce.init({

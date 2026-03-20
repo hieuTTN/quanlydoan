@@ -14,7 +14,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="c : ${studentRegis}">
+    <tr th:each="c : ${studentRegis}" th:if="${c.studentRegisStatus.name != 'DANG_CHO' && c.studentRegisStatus.name != 'DA_BI_DUOI'}">
       <td th:text="${c.student.code}"></td>
       <td th:text="${c.student.fullname}"></td>
       <td>

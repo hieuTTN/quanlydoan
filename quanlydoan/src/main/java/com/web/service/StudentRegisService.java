@@ -115,8 +115,10 @@ public class StudentRegisService {
         semesterTeacher.setCurrentStudents(semesterTeacher.getCurrentStudents() + 1);
         semesterTeacherRepository.save(semesterTeacher);
 
-        semesterCompany.setCurrentStudent(semesterCompany.getCurrentStudent() + 1);
-        semesterCompanyRepository.save(semesterCompany);
+        if(semesterCompany != null){
+            semesterCompany.setCurrentStudent(semesterCompany.getCurrentStudent() + 1);
+            semesterCompanyRepository.save(semesterCompany);
+        }
         return studentRegis;
     }
 
@@ -187,5 +189,12 @@ public class StudentRegisService {
             );
             semesterTeacherRepository.save(availableTeacher);
         }
+    }
+
+    public StudentRegis acceptRequest(Long id) {
+        StudentRegis studentRegis = studentRegisRepository.findById(id).orElseThrow(() -> new MessageException("Không tìm thấy dữ liệu"));
+        studentRegis.setStudentRegisStatus(StudentRegisStatus.DANG_THUC_HIEN);
+        studentRegisRepository.save(studentRegis);
+        return studentRegis;
     }
 }

@@ -16,4 +16,7 @@ public interface DocumentRepository extends JpaRepository<Document, Long>, JpaSp
 
     @Query("select d from Document d where d.category.id = ?1 and d.id <> ?2")
     List<Document> documentLq(Long categoryId, Long id);
+
+    @Query("select d from Document d where (d.name like ?1 or d.category.name like ?1) and d.status = 'DANG_HIEN_THI'")
+    List<Document> search(String search);
 }

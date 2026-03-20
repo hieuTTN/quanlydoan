@@ -38,193 +38,95 @@
         <h2>📊 Dashboard Quản Trị Hệ Thống</h2>
         <p>Chào mừng bạn trở lại hệ thống quản trị.</p>
     </div>
-    <div class="container-fluid p-4">
+    <div class="dashboard-admin-container">
 
-    <!-- STAT CARDS -->
-    <div class="row g-4">
-
-        <div class="col-md-3 fade-in">
-            <div class="card dashboard-card shadow-sm bg-primary text-white p-3 position-relative">
-                <h6>Tổng đoàn viên</h6>
-                <h3 id="totalUsers">0</h3>
-                <div class="stat-icon">👤</div>
+        <!-- Tổng quan -->
+        <div class="row dashboard-admin-summary">
+            <div class="col-md-3">
+                <div class="dashboard-admin-card">
+                    <h6>Số người đang online</h6>
+                    <h3 th:text="${onlineUsers}" class="text-green"></h3>
+                </div>
             </div>
-        </div>
-
-        <div class="col-md-3 fade-in">
-            <div class="card dashboard-card shadow-sm bg-success text-white p-3 position-relative">
-                <h6>Tổng đơn vị</h6>
-                <h3 id="totalUnits">0</h3>
-                <div class="stat-icon">🏢</div>
+            <div class="col-md-3">
+                <div class="dashboard-admin-card">
+                    <h6>Sinh viên</h6>
+                    <h3 th:text="${totalStudent}"></h3>
+                </div>
             </div>
-        </div>
 
-        <div class="col-md-3 fade-in">
-            <div class="card dashboard-card shadow-sm bg-warning text-dark p-3 position-relative">
-                <h6>Tổng sự kiện</h6>
-                <h3 id="totalEvents">0</h3>
-                <div class="stat-icon">📅</div>
+            <div class="col-md-3">
+                <div class="dashboard-admin-card">
+                    <h6>Đăng ký</h6>
+                    <h3 th:text="${totalRegis}"></h3>
+                </div>
             </div>
-        </div>
 
-        <div class="col-md-3 fade-in">
-            <div class="card dashboard-card shadow-sm bg-danger text-white p-3 position-relative">
-                <h6>Lượt đăng ký</h6>
-                <h3 id="totalRegistrations">0</h3>
-                <div class="stat-icon">📝</div>
+            <div class="col-md-3">
+                <div class="dashboard-admin-card">
+                    <h6>Doanh nghiệp</h6>
+                    <h3 th:text="${totalCompany}"></h3>
+                </div>
             </div>
-        </div>
 
-    </div>
-
-    <!-- CHARTS -->
-    <div class="row mt-5 g-4">
-
-        <div class="col-lg-8">
-            <div class="card chart-card shadow-sm p-4">
-               <div class="d-flex justify-content-between align-items-center">
-                    <h6 class="section-title mb-0">Sự kiện theo tháng</h6>
-                    <select id="select-event-year" class="form-select form-select-sm w-auto" onchange="thongKeSuKienThang()">
-                    </select>
-                </div>               
-                <div id="bieudo">
-
+            <div class="col-md-3">
+                <div class="dashboard-admin-card">
+                    <h6>Đồ án</h6>
+                    <h3 th:text="${totalProject}"></h3>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="dashboard-admin-card">
+                    <h6>Tài liệu</h6>
+                    <h3 th:text="${totalDocument}"></h3>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="dashboard-admin-card">
+                    <h6>Bài viết</h6>
+                    <h3 th:text="${totalBlog}"></h3>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-4">
-            <div class="card chart-card shadow-sm p-4">
-                <h6 class="section-title">Trạng thái đăng ký</h6>
-                <div style="display: none;" id="noti-regis" class="text-center"><strong class="text-center">Không có dữ liệu đăng ký</strong></div>
-                <canvas id="registrationChart"></canvas>
-            </div>
-        </div>
+        <div class="dashboard-admin-top-student mt-4">
+            <h5 class="dashboard-admin-title">🏆 Top sinh viên xuất sắc</h5>
 
-        <div class="col-lg-12">
-            <div class="card chart-card shadow-sm p-4">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h6 class="section-title mb-0">Tăng trưởng đoàn viên</h6>
-                    <select id="select-user-year" class="form-select form-select-sm w-auto" onchange="thongKeDoanVienMoi()">
-                    </select>
-                </div>  
-                <div id="bieudo-user">
+            <div class="row">
+                <div class="col-md-4"
+                     th:each="s, stat : ${topStudent}">
 
+                    <div class="dashboard-admin-student-card"
+                         th:classappend="${stat.index == 0} ? ' top-1' : ''">
+
+                        <!-- Rank -->
+                        <div class="dashboard-admin-rank">
+                            <span th:text="${stat.index + 1}"></span>
+                        </div>
+
+                        <!-- Avatar -->
+                        <div class="dashboard-admin-avatar">
+                            <img th:src="${s.student.avatar != null ? s.student.avatar : '/image/default-avatar.jpg'}">
+                        </div>
+
+                        <!-- Info -->
+                        <div class="dashboard-admin-info">
+                            <h6 th:text="${s.student.fullname}"></h6>
+                            <span th:text="${s.student.code}"></span>
+                        </div>
+
+                        <!-- Score -->
+                        <div class="dashboard-admin-score">
+                            <span th:text="${#numbers.formatDecimal(s.totalScore,1,2)}"></span>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
-
-    </div>
-
-    <!-- RECENT TABLES -->
-    <div class="row mt-5 g-4">
-
-        <div class="col-lg-6">
-            <div class="card shadow-sm p-4">
-                <div>
-                    <h6 class="section-title">Sự kiện mới nhất</h6>
-                </div>
-
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>Tên</th>
-                        <th>Thời gian</th>
-                        <th>Trạng thái</th>
-                    </tr>
-                    </thead>
-                    <tbody id="recentEventsTable">
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="card shadow-sm p-4">
-                <h6 class="section-title">Đăng ký gần nhất</h6>
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>Đoàn viên</th>
-                        <th>Sự kiện</th>
-                        <th>Thời gian</th>
-                    </tr>
-                    </thead>
-                    <tbody id="recentRegistrationsTable">
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
     </div>
 
 </div>
-</div>
 
-<script>
-
-    // EVENT CHART
-    new Chart(document.getElementById('eventChart'), {
-        type: 'bar',
-        data: {
-            labels: ['T1','T2','T3','T4','T5','T6'],
-            datasets: [{
-                label: 'Sự kiện',
-                data: [5,8,6,10,4,9],
-                backgroundColor: '#0d6efd'
-            }]
-        }
-    });
-
-    // REGISTRATION STATUS CHART
-    // new Chart(document.getElementById('registrationChart'), {
-    //     type: 'doughnut',
-    //     data: {
-    //         labels: ['APPROVED','PENDING','REJECTED'],
-    //         datasets: [{
-    //             data: [2200, 800, 421],
-    //             backgroundColor: ['#198754','#ffc107','#dc3545']
-    //         }]
-    //     }
-    // });
-
-    // USER GROWTH CHART
-    new Chart(document.getElementById('userGrowthChart'), {
-        type: 'line',
-        data: {
-            labels: ['T1','T2','T3','T4','T5','T6'],
-            datasets: [{
-                label: 'Đoàn viên mới',
-                data: [50,70,40,90,60,120],
-                borderColor: '#6610f2',
-                fill: false,
-                tension: 0.3
-            }]
-        }
-    });
-
-
-    function loadYearOptions(selectId) {
-        const select = document.getElementById(selectId);
-        const currentYear = new Date().getFullYear();
-        const maxYears = 10;
-
-        select.innerHTML = ""; // clear cũ
-
-        for (let i = 0; i < maxYears; i++) {
-            const year = currentYear - i;
-
-            const option = document.createElement("option");
-            option.value = year;
-            option.textContent = year;
-
-            if (i === 0) {
-                option.selected = true; // chọn năm hiện tại
-            }
-
-            select.appendChild(option);
-        }
-    }
-</script>
 </body>
 </html>

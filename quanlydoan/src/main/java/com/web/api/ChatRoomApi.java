@@ -7,6 +7,7 @@ import com.web.repository.ChatRoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,25 +19,21 @@ import java.util.Comparator;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/chat-room")
+@RequestMapping("/api/chat")
 @CrossOrigin
 public class ChatRoomApi {
 
     @Autowired
     private ChatRoomRepository chatRoomRepository;
 
-    @GetMapping("/all/chat-by-subject")
-    public ResponseEntity<?> myChat(@RequestParam Long subjectId){
-        List<ChatRoom> result = chatRoomRepository.findBySubject(subjectId);
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
+    @GetMapping("/room/{id}")
+    public List<ChatRoom> loadMessage(
+            @PathVariable Long id,
+            @RequestParam(defaultValue = "0") int page
+    ) {
+        Pageable pageable = PageRequest.of(page, 4);
 
-    @GetMapping("/all/chat-by-subject-page")
-    public ResponseEntity<?> myChat(@RequestParam Long subjectId, Pageable pageable){
-        Page<ChatRoom> result = chatRoomRepository.findBySubject(subjectId, pageable);
-        List<ChatRoom> sortedList = new ArrayList<>(result.getContent());
-        sortedList.sort(Comparator.comparingLong(ChatRoom::getId));
-        Page<ChatRoom> sortedPage = new PageImpl<>(sortedList, pageable, result.getTotalElements());
-        return new ResponseEntity<>(sortedPage, HttpStatus.OK);
+        Page<ChatRoom> result = chatRoomRepository.findByRoom(id, pageable);
+        return result.getContent();
     }
 }

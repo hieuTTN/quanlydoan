@@ -24,4 +24,7 @@ public interface BlogRepository extends JpaRepository<Blog,Long> {
 
     @Query("select b from Blog b where lower(b.title) like lower(concat('%',:keyword,'%'))")
     Page<Blog> search(String keyword, Pageable pageable);
+
+    @Query("select b from Blog b where lower(b.title) like lower(concat('%',:keyword,'%'))")
+    List<Blog> search(String keyword);
 }

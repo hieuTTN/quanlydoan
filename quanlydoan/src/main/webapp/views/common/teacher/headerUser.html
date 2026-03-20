@@ -13,11 +13,40 @@
           <span onclick="window.location.href='/teacher/index'" class="pointer">Internship System</span>
         </div>
         <ul class="main-menu">
-          <li><a href="/teacher/index" class="active">Trang chủ</a></li>
-          <li><a href="/teacher/blogs">Thông báo</a></li>
-          <li><a href="/teacher/documents">Tài nguyên</a></li>
-          <li><a href="/teacher/company">Doanh nghiệp liên kết</a></li>
-          <li><a href="/teacher/project">Quản lý</a></li>
+          <li>
+            <a href="/teacher/index"
+               th:classappend="${#httpServletRequest.requestURI == '/teacher/index'} ? 'active'">
+              Trang chủ
+            </a>
+          </li>
+
+          <li>
+            <a href="/teacher/blogs"
+               th:classappend="${#httpServletRequest.requestURI.startsWith('/teacher/blogs')} ? 'active'">
+              Thông báo
+            </a>
+          </li>
+
+          <li>
+            <a href="/teacher/documents"
+               th:classappend="${#httpServletRequest.requestURI.startsWith('/teacher/documents')} ? 'active'">
+              Tài nguyên
+            </a>
+          </li>
+
+          <li>
+            <a href="/teacher/company"
+               th:classappend="${#httpServletRequest.requestURI.startsWith('/teacher/company')} ? 'active'">
+              Doanh nghiệp liên kết
+            </a>
+          </li>
+
+          <li>
+            <a href="/teacher/project"
+               th:classappend="${#httpServletRequest.requestURI.startsWith('/teacher/project')} ? 'active'">
+              Quản lý
+            </a>
+          </li>
         </ul>
         <div class="search-container">
           <i class="bi bi-search"></i>

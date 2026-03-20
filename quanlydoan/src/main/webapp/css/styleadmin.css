@@ -513,3 +513,117 @@ body {
     left:100%;
 }
 
+.dashboard-admin-container {
+    padding: 20px;
+}
+
+.dashboard-admin-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.dashboard-admin-card:hover {
+    transform: translateY(-5px);
+}
+
+.dashboard-admin-summary h3 {
+    font-size: 28px;
+    font-weight: bold;
+}
+.text-green{
+    color: green;
+}
+.dashboard-admin-progress {
+    background: #fff;
+    padding: 20px;
+    border-radius: 16px;
+}
+
+.dashboard-admin-progress .progress {
+    height: 20px;
+    border-radius: 10px;
+}
+
+.dashboard-admin-progress .progress-bar {
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+}
+.dashboard-admin-top-student {
+    background: #fff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.dashboard-admin-title {
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.dashboard-admin-student-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    border-radius: 14px;
+    background: #f8f9fa;
+    margin-bottom: 15px;
+    transition: 0.3s;
+}
+
+.dashboard-admin-student-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+/* TOP 1 highlight */
+.dashboard-admin-student-card.top-1 {
+    background: linear-gradient(135deg, #ffd700, #ffb700);
+    color: #fff;
+}
+
+.dashboard-admin-rank {
+    font-size: 22px;
+    font-weight: bold;
+    width: 40px;
+    text-align: center;
+}
+
+.dashboard-admin-avatar img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.dashboard-admin-info {
+    flex: 1;
+}
+
+.dashboard-admin-info h6 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.dashboard-admin-info span {
+    font-size: 13px;
+    color: #888;
+}
+
+.dashboard-admin-student-card.top-1 .dashboard-admin-info span {
+    color: #fff;
+}
+
+.dashboard-admin-score {
+    font-size: 20px;
+    font-weight: bold;
+    color: #28a745;
+}
+
+.dashboard-admin-student-card.top-1 .dashboard-admin-score {
+    color: #fff;
+}

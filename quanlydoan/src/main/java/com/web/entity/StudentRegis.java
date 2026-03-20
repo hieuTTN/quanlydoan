@@ -38,6 +38,10 @@ public class StudentRegis {
 
     private String evaluate;
 
+    private String rate;
+
+
+
     @Enumerated(EnumType.STRING)
     private StudentRegisStatus studentRegisStatus;
 

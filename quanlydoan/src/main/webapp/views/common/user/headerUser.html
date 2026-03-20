@@ -12,18 +12,49 @@
           <i class="bi bi-mortarboard-fill"></i>
           <span onclick="window.location.href='/student/index'" class="pointer">Internship System</span>
         </div>
-        <ul class="main-menu">
-          <li><a href="/student/index" class="active">Trang chủ</a></li>
-          <li><a href="/student/blogs">Thông báo</a></li>
-          <li><a href="/student/documents">Tài nguyên</a></li>
-          <li><a href="/student/company">Doanh nghiệp liên kết</a></li>
-          <li><a href="/student/regis-internship">Đăng ký thực tập</a></li>
-          <li><a href="#">Khảo sát</a></li>
+        <ul class="main-menu"
+            th:with="currentUrl=${#httpServletRequest.requestURI}">
+
+          <li>
+            <a href="/student/index"
+               th:classappend="${currentUrl == '/student/index'} ? 'active'">
+              Trang chủ
+            </a>
+          </li>
+
+          <li>
+            <a href="/student/blogs"
+               th:classappend="${currentUrl.startsWith('/student/blogs')} ? 'active'">
+              Thông báo
+            </a>
+          </li>
+
+          <li>
+            <a href="/student/documents"
+               th:classappend="${currentUrl.startsWith('/student/documents')} ? 'active'">
+              Tài nguyên
+            </a>
+          </li>
+
+          <li>
+            <a href="/student/company"
+               th:classappend="${currentUrl.startsWith('/student/company')} ? 'active'">
+              Doanh nghiệp liên kết
+            </a>
+          </li>
+
+          <li>
+            <a href="/student/regis-internship"
+               th:classappend="${currentUrl.startsWith('/student/regis-internship')} ? 'active'">
+              Đăng ký thực tập
+            </a>
+          </li>
+
         </ul>
-        <div class="search-container">
+        <form class="search-container" action="/student/search">
           <i class="bi bi-search"></i>
-          <input type="text" placeholder="Tìm kiếm thông tin..." />
-        </div>
+          <input name="search" type="text" placeholder="Tìm kiếm thông tin..." />
+        </form>
         <div class="header-icons">
           <i class="bi bi-bell"></i>
           <i class="bi bi-person-circle" onclick="window.location.href='/student/my-account'"></i>

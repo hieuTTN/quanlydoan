@@ -18,6 +18,9 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
     @Query("select c from Company c where c.name like ?1 or c.taxCode like ?1 or c.email like ?1 or c.address like ?1")
     Page<Company> findByParam(String search, Pageable pageable);
 
+    @Query("select c from Company c where c.name like ?1 or c.taxCode like ?1 or c.email like ?1 or c.address like ?1")
+    List<Company> findByParam(String search);
+
     @Query("select c from Company c where c.active = true")
     List<Company> findAllList();
 }

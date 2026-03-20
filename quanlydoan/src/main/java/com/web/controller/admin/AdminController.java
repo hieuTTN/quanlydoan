@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/admin") // Thêm tiền tố /admin để quản lý tập trung
+@RequestMapping("/admin")
 public class AdminController {
 
     @RequestMapping(value = {"/add-blog"}, method = RequestMethod.GET)
@@ -83,10 +83,6 @@ public class AdminController {
         return "admin/doimatkhau";
     }
 
-    @RequestMapping(value = {"/index", "/"}, method = RequestMethod.GET)
-    public String index() {
-        return "admin/index";
-    }
 
     @RequestMapping(value = {"/khung"}, method = RequestMethod.GET)
     public String khung() {

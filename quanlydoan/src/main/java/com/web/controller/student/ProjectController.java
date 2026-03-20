@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -35,6 +32,9 @@ public class ProjectController {
 
     @Autowired
     private RelatedDocumentsRepository relatedDocumentsRepository;
+
+    @Autowired
+    private RateRepository rateRepository;
 
     @Autowired
     private UserUtils userUtils;
@@ -62,6 +62,14 @@ public class ProjectController {
         model.addAttribute("workProcesses",workProcesses);
         model.addAttribute("countRelate",relatedDocumentsRepository.countBySemesterTeacher(semesterTeacher.getId()));
         model.addAttribute("semesterTeacherId",semesterTeacher.getId());
+        model.addAttribute("studentRegisId",studentRegisId);
+        Optional<Rate> rate = rateRepository.findByStudentRegisId(studentRegisId);
+        if(rate.isPresent()){
+            model.addAttribute("rate",rate.get());
+        }
+        else{
+            model.addAttribute("rate",new Rate());
+        }
         return "student/project/project-detail";
     }
 

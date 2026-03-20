@@ -11,39 +11,7 @@
                 <!-- MESSAGE LIST -->
                 <input type="hidden" th:value="${semesterTeacherId}" id="semesterTeacherId">
                 <div class="chat-body" id="chatBody">
-                    <!-- MESSAGE (MÌNH) -->
-                    <div class="chat-item my">
-                        <img src="avatar-user.jpg" class="avatar">
-                        <div class="bubble">
-                            <div class="meta">
-                                <span class="name">Bạn</span>
-                                <span class="time">10:30</span>
-                            </div>
-                            <div class="content">Xin chào mọi người 👋</div>
-                        </div>
-                    </div>
-                    <!-- MESSAGE (NGƯỜI KHÁC) -->
-                    <div class="chat-item other">
-                        <img src="avatar2.jpg" class="avatar">
-                        <div class="bubble">
-                            <div class="meta">
-                                <span class="name">Nguyễn Văn B</span>
-                                <span class="time">10:32</span>
-                            </div>
-                            <div class="content">Chào bạn nhé!</div>
-                        </div>
-                    </div>
-                    <!-- IMAGE -->
-                    <div class="chat-item my">
-                        <img src="avatar-user.jpg" class="avatar">
-                        <div class="bubble">
-                            <div class="meta">
-                                <span class="name">Bạn</span>
-                                <span class="time">10:33</span>
-                            </div>
-                            <img src="image.jpg" class="chat-img">
-                        </div>
-                    </div>
+
                 </div>
                 <div class="chat-footer">
                     <textarea id="editorChat"></textarea>
@@ -52,7 +20,15 @@
                     </button>
                 </div>
             </div>
+        <input type="hidden" id="currentUserId" th:value="${userLogged.id}">
     </div>
+    <script>
+        $( document ).ready(async function() {
+            await loadMessages();
+            const chatBody = document.getElementById("chatBody");
+            chatBody.scrollTop = chatBody.scrollHeight;
+        });
+    </script>
 
     <script>
         tinymce.init({
@@ -115,6 +91,7 @@
             }
         });
     </script>
+
     <script>
         function connect() {
             const socket = new SockJS('/ws');
@@ -122,7 +99,8 @@
             stompClient.connect({}, function (frame) {
                 console.log('Connected: ' + frame);
                 stompClient.subscribe(`/topic/chat-room/${$("#semesterTeacherId").val()}`, function (notification) {
-                    console.log(notification)
+                    const data = JSON.parse(notification.body);
+                    appendMessage(data);
                 });
             }, function (error) {
                 console.error('Connection failed:', error);
@@ -134,8 +112,130 @@
         async function chatAction(){
             var mess = tinyMCE.get('editorChat').getContent()
             var idSemesterTeacher = document.getElementById("semesterTeacherId").value
-            stompClient.send("/topic/chat-room/"+idSemesterTeacher, {}, mess);
+            stompClient.send("/app/chat-room/"+idSemesterTeacher, {}, mess);
+            tinyMCE.get('editorChat').setContent('')
         }
+
+        function appendMessage(data) {
+            const chatBody = document.getElementById("chatBody");
+
+            const myId = document.getElementById("currentUserId").value;
+            const isMe = data.sender.id == myId;
+
+            const itemClass = isMe ? "chat-item my" : "chat-item other";
+
+            const avatar = data.sender.avatar && data.sender.avatar !== ""
+                ? data.sender.avatar
+                : "/image/default-avatar.jpg";
+
+            const name = isMe ? "Bạn" : data.sender.fullname;
+
+            const time = formatTime(data.createdDate);
+
+            const html = `
+                <div class="${itemClass}">
+                    <img src="${avatar}" class="avatar">
+                    <div class="bubble">
+                        <div class="meta">
+                            <span class="name">${name}</span>
+                            <span class="time">${time}</span>
+                        </div>
+                        <div class="content">${data.content}</div>
+                    </div>
+                </div>
+            `;
+
+            chatBody.insertAdjacentHTML("beforeend", html);
+
+            // auto scroll xuống cuối
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        // function formatTime(dateStr) {
+        //     const date = new Date(dateStr);
+        //     return date.toLocaleTimeString("vi-VN", {
+        //         hour: "2-digit",
+        //         minute: "2-digit"
+        //     });
+        // }
+    </script>
+
+    <script>
+        let currentPage = 0;
+        let isLoading = false;
+        let isLastPage = false;
+        async function loadMessages() {
+            if (isLoading || isLastPage) return;
+
+            isLoading = true;
+
+            const roomId = document.getElementById("semesterTeacherId").value;
+
+            const res = await fetch(`/api/chat/room/${roomId}?page=${currentPage}`);
+            const data = await res.json();
+
+            if (data.length < 4) {
+                isLastPage = true;
+            }
+
+            renderOldMessages(data);
+
+            currentPage++;
+            isLoading = false;
+        }
+
+        function renderOldMessages(messages) {
+            const chatBody = document.getElementById("chatBody");
+
+            // đảo lại để đúng thứ tự thời gian
+            messages.forEach(msg => {
+                const html = buildMessageHTML(msg);
+
+                chatBody.insertAdjacentHTML("afterbegin", html);
+            });
+        }
+
+        function buildMessageHTML(data) {
+            const myId = document.getElementById("currentUserId").value;
+            const isMe = data.sender.id == myId;
+
+            const itemClass = isMe ? "chat-item my" : "chat-item other";
+
+            const avatar = data.sender.avatar && data.sender.avatar !== ""
+                ? data.sender.avatar
+                : "/image/default-avatar.jpg";
+
+            const name = isMe ? "Bạn" : data.sender.fullname;
+
+            const time = formatTime(data.createdDate);
+
+            return `
+                <div class="${itemClass}">
+                    <img src="${avatar}" class="avatar">
+                    <div class="bubble">
+                        <div class="meta">
+                            <span class="name">${name}</span>
+                            <span class="time">${time}</span>
+                        </div>
+                        <div class="content">${data.content}</div>
+                    </div>
+                </div>
+            `;
+            }
+
+        const chatBody = document.getElementById("chatBody");
+
+        chatBody.addEventListener("scroll", async function () {
+            if (chatBody.scrollTop === 0) {
+                const oldHeight = chatBody.scrollHeight;
+
+                await loadMessages();
+
+                // giữ vị trí scroll không bị nhảy
+                const newHeight = chatBody.scrollHeight;
+                chatBody.scrollTop = newHeight - oldHeight;
+            }
+        });
     </script>
 </div>
 </body>

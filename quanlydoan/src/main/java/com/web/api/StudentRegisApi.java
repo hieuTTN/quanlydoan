@@ -23,6 +23,11 @@ public class StudentRegisApi {
         return studentRegisService.create(request);
     }
 
+    @PostMapping("/teacher/accept")
+    public StudentRegis accept(@RequestParam Long id){
+        return studentRegisService.acceptRequest(id);
+    }
+
     @GetMapping("/public/create")
     public void createss(){
         studentRegisService.createAll();
