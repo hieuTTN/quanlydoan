@@ -71,6 +71,9 @@ public class DocumentService {
         if(document.getStatus() == null){
             document.setStatus(DocumentStatus.DANG_CHO);
         }
+        else{
+            document.setStatus(dto.getStatus());
+        }
         Document result = documentRepository.save(document);
         for(DocumentRequest.Detail s : dto.getDetails()){
             DocumentDetail detail = documentMapper.requestToEntity(s);
