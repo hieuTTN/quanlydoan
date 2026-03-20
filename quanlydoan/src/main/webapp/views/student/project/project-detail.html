@@ -6,6 +6,7 @@
   <script src="/student/js/request.js"></script>
   <script src="/student/js/work.js"></script>
   <script src="/student/js/relate-document.js"></script>
+  <script src="https://cdn.tiny.cloud/1/f6s0gxhkpepxkws8jawvfwtj0l9lv0xjgq1swbv4lgcy3au3/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
 <body>
 <div th:replace="common/user/headerUser :: headerUser"></div>
@@ -14,78 +15,67 @@
   <div class="account-content">
     <div class="account-content-inner">
       <div class="project-info-card">
-        <div class="project-info-header">
-          <div class="project-title">
-            <h4 th:if="${semesterTeacher.projectName != null && semesterTeacher.projectName != ''}"><th:block th:text="${semesterTeacher.projectName}"></th:block></h4>
-            <span class="badge bg-success"
-                  th:if="${semesterTeacher.semesterType.semester.endDate.after(#dates.createNow())}">
+
+        <div class="project-info-body">
+          <div class="row">
+            <div class="col-md-9">
+              <div class="project-info-header mt-3">
+                <div class="project-title">
+                  <h4 th:if="${semesterTeacher.projectName != null && semesterTeacher.projectName != ''}"><th:block th:text="${semesterTeacher.projectName}"></th:block></h4>
+                  <span class="badge bg-success"
+                        th:if="${semesterTeacher.semesterType.semester.endDate.after(#dates.createNow())}">
                 Đang thực hiện
             </span>
-            <span class="badge bg-error"
-                  th:if="${semesterTeacher.semesterType.semester.endDate.before(#dates.createNow())}">
+                  <span class="badge bg-error"
+                        th:if="${semesterTeacher.semesterType.semester.endDate.before(#dates.createNow())}">
                 Đã kết thúc
             </span>
-            <span th:if="${semesterTeacher.semesterType.type.name=='TAI_TRUONG'}" class="badge bg-primary">Nhóm thực tập tại trường</span>
-            <span th:if="${semesterTeacher.semesterType.type.name=='DOANH_NGHIEP_LIEN_KET'}" class="badge bg-primary">Nhóm công ty liên kết</span>
-            <span th:if="${semesterTeacher.semesterType.type.name=='DOANH_NGHIEP_NGOAI'}" class="badge bg-primary">Nhóm doanh nghiệp ngoài</span>
-          </div>
-        </div>
-
-        <div class="project-info-wrapper">
-
-          <!-- BUTTON -->
-          <div class="text-end mb-2">
-            <button class="btn btn-sm btn-outline-primary toggle-project-info">
-              Thu gọn
-            </button>
-          </div>
-
-          <!-- CONTENT -->
-          <div class="project-info-body collapse-box">
-            <div class="row">
-              <div class="col-md-8">
-                <div class="info-item" th:if="${semesterTeacher.descriptionProject != null && semesterTeacher.descriptionProject != ''}">
-                  <label>Mô tả:</label>
-                  <p th:text="${semesterTeacher.descriptionProject}"></p>
-                </div>
-
-                <div class="info-item">
-                  <label>Giảng viên hướng dẫn:</label>
-                  <span th:text="${semesterTeacher.teacher.fullname}"></span>
-                </div>
-
-                <div class="info-item">
-                  <label>Thời gian:</label>
-                  <span>
-            <th:block th:text="${#dates.format(semesterTeacher.semesterType.semester.startDate, 'dd-MM-yyyy')}"></th:block>
-            -
-            <th:block th:text="${#dates.format(semesterTeacher.semesterType.semester.endDate, 'dd-MM-yyyy')}"></th:block>
-          </span>
+                  <span th:if="${semesterTeacher.semesterType.type.name=='TAI_TRUONG'}" class="badge bg-primary">Nhóm thực tập tại trường</span>
+                  <span th:if="${semesterTeacher.semesterType.type.name=='DOANH_NGHIEP_LIEN_KET'}" class="badge bg-primary">Nhóm công ty liên kết</span>
+                  <span th:if="${semesterTeacher.semesterType.type.name=='DOANH_NGHIEP_NGOAI'}" class="badge bg-primary">Nhóm doanh nghiệp ngoài</span>
                 </div>
               </div>
-
-              <div class="col-md-4">
-                <div class="info-box">
-                  <div class="info-box-item">
-                    <span>Sinh viên</span>
-                    <strong>
-                      <th:block th:text="${semesterTeacher.currentStudents}"></th:block> /
-                      <th:block th:text="${semesterTeacher.maxStudents}"></th:block>
-                    </strong>
+              <div class="row">
+                <div class="col-sm-3">
+                  <div class="info-item">
+                    <label>Giảng viên hướng dẫn:</label>
+                    <span th:text="${semesterTeacher.teacher.fullname}"></span>
                   </div>
-
-                  <div class="info-box-item">
-                    <span>Còn </span>
-                    <strong>
-                      <span th:text="${(semesterTeacher.semesterType.semester.endDate.time - #dates.createNow().time) / (1000 * 60 * 60 * 24)}"></span>
-                      ngày kết thúc đồ án
-                    </strong>
+                </div>
+                <div class="col-sm-3">
+                  <div class="info-item">
+                    <label>Thời gian:</label>
+                    <span>
+                    <th:block th:text="${#dates.format(semesterTeacher.semesterType.semester.startDate, 'dd-MM-yyyy')}"></th:block>
+                    -
+                    <th:block th:text="${#dates.format(semesterTeacher.semesterType.semester.endDate, 'dd-MM-yyyy')}"></th:block>
+                </span>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="info-item" th:if="${semesterTeacher.descriptionProject != null && semesterTeacher.descriptionProject != ''}">
+                    <label>Mô tả:</label>
+                    <p th:text="${semesterTeacher.descriptionProject}">
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+            <!-- RIGHT -->
+            <div class="col-md-3">
+              <div class="info-box">
+                <div class="info-box-item">
+                  <span>Sinh viên</span>
+                  <strong><th:block th:text="${semesterTeacher.currentStudents}"></th:block> / <th:block th:text="${semesterTeacher.maxStudents}"></th:block></strong>
+                </div>
 
+                <div class="info-box-item">
+                  <span>Còn </span>
+                  <strong><span th:text="${(semesterTeacher.semesterType.semester.endDate.time - #dates.createNow().time) / (1000 * 60 * 60 * 24)}"></span> ngày kết thúc đồ án</strong>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="account-tabs-containers">
@@ -129,7 +119,6 @@
 </div>
 <div th:replace="common/user/footeruser :: footerMain"></div>
 
-<script src="https://cdn.tiny.cloud/1/f6s0gxhkpepxkws8jawvfwtj0l9lv0xjgq1swbv4lgcy3au3/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
   tinymce.init({
     selector: 'textarea.teacher-project-detail', // Chọn textarea có id là 'editor'

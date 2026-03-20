@@ -34,7 +34,7 @@
   <script>
     let stompClient = null;
 
-    function connect() {
+    function connectOnline() {
       const socket = new SockJS('/ws');
       stompClient = Stomp.over(socket);
       stompClient.connect({}, function (frame) {
@@ -47,7 +47,7 @@
       });
     }
 
-    connect();
+    connectOnline();
   </script>
 </div>
 </body>

@@ -21,4 +21,5 @@ public class ScoreRatio {
 
     @ManyToOne
     private Semester semester;
+
 }
